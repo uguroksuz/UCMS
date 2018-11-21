@@ -32,13 +32,15 @@
                             <td><?php echo $item->description; ?></td>
                             <td>
                                 <input
+                                    data-url="<?php echo base_url("product/isActiveSetter/$item->id"); ?>"
+                                    class="isActive"
                                     type="checkbox" 
                                     data-switchery 
                                     <?php echo ($item->isActive) ? "checked" : "" ?> />
                             </td>
                             <td>
                                 <button data-url="<?php echo base_url("product/delete/$item->id"); ?>" class="btn btn-xs btn-outline btn-warning remove-btn"><i class="fa fa-trash"></i> Sil</button>
-                                <button data-url="<?php echo base_url("product/update_form/$item->id"); ?>" class="btn btn-xs btn-outline btn-primary"><i class="fa fa-edit"></i> Düzenle</button>
+                                <a href="<?php echo base_url("product/update_form/$item->id"); ?>" class="btn btn-xs btn-outline btn-primary"><i class="fa fa-edit"></i> Düzenle</a>
                             </td>
                         </tr> 
                     <?php } ?>

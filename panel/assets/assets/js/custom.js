@@ -3,7 +3,6 @@ $(document).ready(function(){
     $(".remove-btn").click(function(e){
 
         var $data_url = $(this).data("url");
-        
         swal({
             title: 'Emin misiniz?',
             text: "Bu işlem geri alınamaz!",
@@ -18,6 +17,16 @@ $(document).ready(function(){
                 window.location.href = $data_url;
             }
           });
+    })
+
+    $(".isActive").change(function(){
+        var $data = $(this).prop("checked");
+        var $data_url = $(this).data("url");
+
+        if (typeof $data !== "undefined" && typeof $data_url !== "undefined") {
+            $.post($data_url, {data : $data}, function(response) {});
+        }
+
     })
 
 
