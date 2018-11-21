@@ -70,10 +70,11 @@ class Product extends CI_Controller
                 )
             );
 
+            //TODO: alert sistemi eklenecek.
             if ($insert) {
-                echo "Kayıt Başarılı";
+                redirect(base_url("product"));
             }else {
-                echo  "Kayıt Başarısız";
+                redirect(base_url("product"));                
             }
 
         }else {
