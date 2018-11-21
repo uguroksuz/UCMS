@@ -58,12 +58,14 @@ class Product extends CI_Controller
         if ($validate) {
             echo "kayıt başlar";
         }else {
-            echo validation_errors();
+            $viewData = new stdClass();
+
+            $viewData->viewFolder = $this->viewFolder;
+            $viewData->subViewFolder = "add";
+            $viewData->form_error = true;
+
+            $this->load->view("{$viewData->viewFolder}/{$viewData->subViewFolder}/index", $viewData);
         }
-
-        //başarılı ise
-            //kaytı işlemi başlar
-
 
     }
 
