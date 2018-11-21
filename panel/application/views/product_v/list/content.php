@@ -37,8 +37,8 @@
                                     <?php echo ($item->isActive) ? "checked" : "" ?> />
                             </td>
                             <td>
-                                <a href="<?php echo base_url("product/delete/$item->id"); ?>" class="btn btn-xs btn-outline btn-warning"><i class="fa fa-trash"></i> Sil</a>
-                                <a href="<?php echo base_url("product/update_form/$item->id"); ?>" class="btn btn-xs btn-outline btn-primary"><i class="fa fa-edit"></i> Düzenle</a>
+                                <button data-url="<?php echo base_url("product/delete/$item->id"); ?>" class="btn btn-xs btn-outline btn-warning remove-btn"><i class="fa fa-trash"></i> Sil</button>
+                                <button data-url="<?php echo base_url("product/update_form/$item->id"); ?>" class="btn btn-xs btn-outline btn-primary"><i class="fa fa-edit"></i> Düzenle</button>
                             </td>
                         </tr> 
                     <?php } ?>
