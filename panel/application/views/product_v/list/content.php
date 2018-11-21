@@ -9,9 +9,11 @@
     <div class="col-md-12">
         <div class="widget p-lg">
 
-            <div class="alert alert-info alert-custom">
+            <?php if (empty($items)) { ?>
+            <div class="alert alert-info text-center">
                 <p>Herhangi bir veri bulunmamaktadır. Eklemek için lütfen <a href="$">tıklayınız.</a></p>
-            </div>      
+            </div> 
+            <?php } else{ ?> 
             <table class="table table-hover table-striped">
                 <thead>
                     <th>#id</th>
@@ -22,21 +24,28 @@
                     <th>İşlem</th>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>#1</td>
-                        <td>monitor-askisi</td>
-                        <td>Monitör Askısı</td>
-                        <td>360 derece monitör askısı</td>
-                        <td>
-                            <input id="switch-0-3" type="checkbox" data-switchery checked />
-                        </td>
-                        <td>
-                            <a href="#" class="btn btn-xs btn-outline btn-warning"><i class="fa fa-trash"></i> Sil</a>
-                            <a href="#" class="btn btn-xs btn-outline btn-primary"><i class="fa fa-edit"></i> Düzenle</a>
-                        </td>
-                    </tr>
+                    <?php foreach ($items as $item) {?>
+                        <tr>
+                            <td><?php echo $item->id; ?></td>
+                            <td><?php echo $item->url; ?></td>
+                            <td><?php echo $item->title; ?></td>
+                            <td><?php echo $item->description; ?></td>
+                            <td>
+                                <input
+                                    type="checkbox" 
+                                    data-switchery 
+                                    <?php echo ($item->isActive) ? "checked" : "" ?> />
+                            </td>
+                            <td>
+                                <a href="#" class="btn btn-xs btn-outline btn-warning"><i class="fa fa-trash"></i> Sil</a>
+                                <a href="#" class="btn btn-xs btn-outline btn-primary"><i class="fa fa-edit"></i> Düzenle</a>
+                            </td>
+                        </tr> 
+                    <?php } ?>
+                    
                 </tbody>
             </table>
+            <?php } ?>
         </div><!-- .widget -->
     </div><!-- END column -->
 </div>
