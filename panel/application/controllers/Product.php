@@ -252,8 +252,15 @@ class Product extends CI_Controller
 
     public function image_upload($id){
 
+        // $file_name = convetToseo($_FILES["file"]["name"]);
+        // $ext = pathinfo($_FILES["file"]["name"], PATHINFO_EXTENSION);
+
+        $file_name = convertToSeo(pathinfo($_FILES["file"]["name"], PATHINFO_FILENAME)) . "." . pathinfo($_FILES["file"]["name"], PATHINFO_EXTENSION);
+
+
         $config["allowed_types"] = "jpg|jepg|png";
         $config["upload_path"] = "uploads/$this->viewFolder/";
+        $config["file_name"] = $file_name;
         
         $this->load->library("upload", $config);
 
@@ -261,11 +268,11 @@ class Product extends CI_Controller
 
         if ($upload) {
 
-            $uploaded_file = $this->upload->data("file_name");
+            // $uploaded_file = $this->upload->data("file_name");
 
             $this->product_image_model->add(
                 array(
-                    "img_url"       => $uploaded_file,
+                    "img_url"       => $file_name,
                     "rank"          => 0,
                     "isActive"      => 1,
                     "isCover"       => 0,
@@ -274,7 +281,7 @@ class Product extends CI_Controller
                 )
             );
         } else {
-            echo   "olmadı";
+            echo   "Bir Hata Oluştu!";
         }
 
     }
