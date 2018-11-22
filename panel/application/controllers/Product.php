@@ -75,10 +75,27 @@ class Product extends CI_Controller
 
             //TODO: alert sistemi eklenecek.
             if ($insert) {
-                redirect(base_url("product"));
+
+                $alert = array(
+                    "title"      =>"İşlem Başarılı",
+                    "message"    =>"Kayıt ekleme işlemi başarılı.",
+                    "type"      =>"success"
+                );
+
             }else {
-                redirect(base_url("product"));                
+
+                $alert = array(
+                    "title"      =>"İşlem Başarısız.",
+                    "message"    =>"Kayıt eklenemedi",
+                    "type"      =>"error"
+                );
+                          
             }
+            
+            // işlem sonucunu sessiona yazıyoruz.
+            $this->session->set_flashdata("alert", $alert);
+
+            redirect(base_url("product"));
 
         }else {
             $viewData = new stdClass();
@@ -144,10 +161,21 @@ class Product extends CI_Controller
 
             //TODO: alert sistemi eklenecek.
             if ($update) {
-                redirect(base_url("product"));
+                $alert = array(
+                    "title"      =>"İşlem Başarılı",
+                    "message"    =>"Güncelleme işlemi başarılı.",
+                    "type"      =>"success"
+                );
             }else {
-                redirect(base_url("product"));                
+                $alert = array(
+                    "title"      =>"İşlem Başarısız.",
+                    "message"    =>"Güncelleme sırasında bir hata oluştu.",
+                    "type"      =>"error"
+                );
             }
+
+            $this->session->set_flashdata("alert", $alert);
+            redirect(base_url("product"));                
 
         }else {
             $viewData = new stdClass();
@@ -180,10 +208,21 @@ class Product extends CI_Controller
 
         //TODO: Alert sistemi eklenecek
         if ($delete) {
-            redirect(base_url("product"));
+            $alert = array(
+                "title"      =>"İşlem Başarılı",
+                "message"    =>"Kayıt silme başarılı.",
+                "type"      =>"success"
+            );
         }else {
-            redirect(base_url("product"));
+            $alert = array(
+                "title"      =>"İşlem Başarısız.",
+                "message"    =>"Kayıt silme sırasında bir hata oluştu.",
+                "type"      =>"error"
+            );
         }
+
+        $this->session->set_flashdata("alert", $alert);
+        redirect(base_url("product"));      
 
     }
 
