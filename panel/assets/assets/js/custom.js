@@ -42,10 +42,15 @@ $(document).ready(function(){
 
 
     var uploadSection = Dropzone.forElement("#dropzone");
+    uploadSection.on("complete", function(file){
+        //console.log(file);
 
+        var $data_url = $("#dropzone").data("url");
 
-    uploadSection.on("complete", function(){
-        alert();
+        $.post($data_url, {}, function(response){
+            $(".image_list_container").html(response);
+        });
+
     });
 
 })
