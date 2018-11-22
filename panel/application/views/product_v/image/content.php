@@ -43,7 +43,7 @@
                         <tr>
                             <td>#1</td>
                             <td>
-                                <img width="30" src="http://uguroksuz.com/wp-content/uploads/2017/11/csharp-375x195.jpg" alt="" class="img-responsive">
+                                <img width="50" src="http://uguroksuz.com/wp-content/uploads/2017/11/csharp-375x195.jpg" alt="" class="img-responsive">
                             </td>
                             <td>deneme-urun.jpg</td>
                             <td>
