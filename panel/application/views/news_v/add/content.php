@@ -9,7 +9,7 @@
         <div class="widget">
             <hr class="widget-separator">
             <div class="widget-body">
-                <form action="<?php echo base_url("news/save"); ?>" method="post">
+                <form action="<?php echo base_url("news/save"); ?>" method="post" enctype="multipart/form-data">
                     <div class="form-group">
                         <label>Başlık</label>
                         <input class="form-control" id="exampleInputEmail1" placeholder="Başlık" name="title">

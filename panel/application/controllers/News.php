@@ -47,6 +47,33 @@ class News extends CI_Controller
         $this->load->library("form_validation");
 
         //kurallar yazılır..
+
+        $news_type = $this->input->post("news_type");
+
+        if ($news_type == "image") {
+            
+            if ($_FILES["img_url"]["name"] == "") {
+
+                $alert = array(
+                    "title"      =>"İşlem Başarısız.",
+                    "message"    =>"Lütfen bir gösel seçiniz.",
+                    "type"      =>"error"
+                );
+
+            // işlem sonucunu sessiona yazıyoruz.
+            $this->session->set_flashdata("alert", $alert);
+            redirect(base_url("news/new_form"));
+
+            }
+
+
+
+
+        } else if($news_type == "video"){
+            # code...
+        }
+        
+
         $this->form_validation->set_rules("title", "Başlık", "required|trim");
 
         $this->form_validation->set_message(
@@ -95,7 +122,7 @@ class News extends CI_Controller
             // işlem sonucunu sessiona yazıyoruz.
             $this->session->set_flashdata("alert", $alert);
 
-            redirect(base_url("product"));
+            redirect(base_url("news"));
 
         }else {
             $viewData = new stdClass();
