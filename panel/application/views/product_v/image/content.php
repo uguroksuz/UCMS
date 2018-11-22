@@ -3,7 +3,7 @@
         <div class="widget">
             <hr class="widget-separator">
             <div class="widget-body">
-                <form action="<?php echo base_url("product/image_upload"); ?>" class="dropzone" data-plugin="dropzone" >
+                <form action="<?php echo base_url("product/image_upload/$item->id"); ?>" class="dropzone" data-plugin="dropzone" data-options="{ url: '<?php echo base_url("product/image_upload/$item->id"); ?>'}">
                     <div class="dz-message">
                         <h3 class="m-h-lg">Resim Ekle</h3>
                         <p class="m-b-lg text-muted">(Yüklemek istediğiniz resimleri buraya sürükleyiniz. Yada buraya tıklayınız.)</p>
