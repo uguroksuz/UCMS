@@ -13,8 +13,8 @@
             <div class="alert alert-info text-center">
                 <p>Herhangi bir veri bulunmamaktadır. Eklemek için lütfen <a href="<?php echo base_url("product/new_form"); ?>">tıklayınız.</a></p>
             </div> 
-            <?php } else{ ?> 
-            <table class="table table-hover table-striped">
+            <?php } else{ ?>
+            <table class="table table-hover table-striped content-container">
                 <thead>
                     <th><i class="fa fa-reorder"></i></th>
                     <th>#id</th>

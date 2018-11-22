@@ -206,6 +206,25 @@ class Product extends CI_Controller
         }
     }
 
+    public function imageIsActiveSetter($id){
+        
+        if ($id) {
+
+            $isActive = ($this->input->post("data") === "true") ? 1 : 0 ;
+
+            $this->product_image_model->update(
+                array(
+                    "id" => $id
+                ),
+                array(
+                    "isActive" => $isActive
+                )
+            );
+
+            
+        }
+    }
+
     public function isCoverSetter($id, $parent_id){
         
         if ($id && $parent_id) {
@@ -242,7 +261,7 @@ class Product extends CI_Controller
             $viewData->item_images = $this->product_image_model->get_all(
                 array(
                     "product_id" => $parent_id
-                )
+                ), "rank ASC"
             );
 
             $render_html = $this->load->view("{$viewData->viewFolder}/{$viewData->subViewFolder}/render_elements/image_list_v", $viewData, true);
@@ -275,6 +294,28 @@ class Product extends CI_Controller
         }
     }
 
+    public function imageRankSetter(){
+        $data = $this->input->post("data");
+
+        parse_str($data, $order);
+
+        $items = $order["ord"];
+
+        foreach ($items as $rank => $id) {
+
+            $this->product_image_model->update(
+                array(
+                    "id"        => $id,
+                    "rank !="   => $rank
+                ),
+                array(
+                    "rank" => $rank
+                )
+            );
+
+        }
+    }
+
     public function image_form($id){
 
         $viewData = new stdClass();
@@ -291,7 +332,7 @@ class Product extends CI_Controller
         $viewData->item_images = $this->product_image_model->get_all(
             array(
                 "product_id" => $id
-            )
+            ), "rank ASC"
         );
 
         $this->load->view("{$viewData->viewFolder}/{$viewData->subViewFolder}/index", $viewData);
