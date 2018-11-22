@@ -9,6 +9,7 @@
         <th class="w100 text-center">Görsel</th>
         <th>Resim Adı</th>
         <th class="w100 text-center">Durumu</th>
+        <th class="w100 text-center">Kapak</th>
         <th class="w100 text-center">İşlem</th>
     </thead>
     <tbody>
@@ -21,12 +22,22 @@
             <td><?php echo $image->img_url; ?></td>
             <td class="w100 text-center">
             <input
-                    data-url="<?php echo base_url("product/isActiveSetter"); ?>"
+                    data-url="<?php echo base_url("product/isActiveSetter/$image->id"); ?>"
                     class="isActive"
                     type="checkbox" 
                     data-switchery 
-                    <?php echo ($image->id) ? "checked" : "" ?> />
+                    <?php echo ($image->isActive) ? "checked" : "" ?> />
             </td>
+            <td class="w100 text-center">
+            <input
+                    data-url="<?php echo base_url("product/isCoverSetter/$image->id/$image->product_id"); ?>"
+                    class="isCover"
+                    type="checkbox"
+                    data-color="#ff5d5d"
+                    data-switchery 
+                    <?php echo ($image->isCover) ? "checked" : "" ?> />
+            </td>
+            
             <td class="w100 text-center">
                 <button data-url="<?php echo base_url("product"); ?>" class="btn btn-sm btn-outline btn-block btn-warning remove-btn"><i class="fa fa-trash"></i> Sil</button>
             </td>
