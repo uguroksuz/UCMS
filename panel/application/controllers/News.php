@@ -5,8 +5,7 @@ class News extends CI_Controller
 
     public $viewFolder = "";
 
-     public function __construct()
-    {
+     public function __construct(){
         parent::__construct();
         $this->viewFolder = "news_v";
 
@@ -295,35 +294,7 @@ class News extends CI_Controller
         }
 
         $this->session->set_flashdata("alert", $alert);
-        redirect(base_url("product"));      
-
-    }
-
-    public function imageDelete($id, $parent_id){
-
-        $file_name = $this->product_image_model->get(
-            array(
-                "id" => $id
-            )
-        );
-
-
-
-        $delete = $this->product_image_model->delete(
-            array(
-                "id" => $id
-            )
-        );
-
-        //TODO: Alert sistemi eklenecek
-        if ($delete) {
-
-            unlink("uploads/{$this->viewFolder}/$file_name->img_url");
-
-            redirect(base_url("product/image_form/$parent_id"));
-        }else {
-            redirect(base_url("product/image_form/$parent_id"));
-        }
+        redirect(base_url("news"));
 
     }
 
@@ -341,72 +312,6 @@ class News extends CI_Controller
                     "isActive" => $isActive
                 )
             );
-
-            
-        }
-    }
-
-    public function imageIsActiveSetter($id){
-        
-        if ($id) {
-
-            $isActive = ($this->input->post("data") === "true") ? 1 : 0 ;
-
-            $this->product_image_model->update(
-                array(
-                    "id" => $id
-                ),
-                array(
-                    "isActive" => $isActive
-                )
-            );
-
-            
-        }
-    }
-
-    public function isCoverSetter($id, $parent_id){
-        
-        if ($id && $parent_id) {
-
-            $isCover = ($this->input->post("data") === "true") ? 1 : 0 ;
-
-            // kapak fotoğrafı olacak id
-            $this->product_image_model->update(
-                array(
-                    "id" => $id,
-                    "product_id" => $parent_id
-                ),
-                array(
-                    "isCover" => $isCover
-                )
-            );
-
-            // Kapak olmayacak diğer kayıtlar.
-            $this->product_image_model->update(
-                array(
-                    "id !="      => $id,
-                    "product_id" => $parent_id
-                ),
-                array(
-                    "isCover" => 0
-                )
-            );
-
-            $viewData = new stdClass();
-
-            $viewData->viewFolder = $this->viewFolder;
-            $viewData->subViewFolder = "image";
-
-            $viewData->item_images = $this->product_image_model->get_all(
-                array(
-                    "product_id" => $parent_id
-                ), "rank ASC"
-            );
-
-            $render_html = $this->load->view("{$viewData->viewFolder}/{$viewData->subViewFolder}/render_elements/image_list_v", $viewData, true);
-
-            echo $render_html;
 
             
         }
@@ -432,105 +337,6 @@ class News extends CI_Controller
             );
 
         }
-    }
-
-    public function imageRankSetter(){
-        $data = $this->input->post("data");
-
-        parse_str($data, $order);
-
-        $items = $order["ord"];
-
-        foreach ($items as $rank => $id) {
-
-            $this->product_image_model->update(
-                array(
-                    "id"        => $id,
-                    "rank !="   => $rank
-                ),
-                array(
-                    "rank" => $rank
-                )
-            );
-
-        }
-    }
-
-    public function image_form($id){
-
-        $viewData = new stdClass();
-
-        $viewData->viewFolder = $this->viewFolder;
-        $viewData->subViewFolder = "image";
-
-        $viewData->item = $this->news_model->get(
-            array(
-                "id" => $id
-            )
-        );
-
-        $viewData->item_images = $this->product_image_model->get_all(
-            array(
-                "product_id" => $id
-            ), "rank ASC"
-        );
-
-        $this->load->view("{$viewData->viewFolder}/{$viewData->subViewFolder}/index", $viewData);
-    }
-
-    public function image_upload($id){
-
-        // $file_name = convetToseo($_FILES["file"]["name"]);
-        // $ext = pathinfo($_FILES["file"]["name"], PATHINFO_EXTENSION);
-
-        $file_name = convertToSeo(pathinfo($_FILES["file"]["name"], PATHINFO_FILENAME)) . "." . pathinfo($_FILES["file"]["name"], PATHINFO_EXTENSION);
-
-
-        $config["allowed_types"] = "jpg|jepg|png";
-        $config["upload_path"] = "uploads/$this->viewFolder/";
-        $config["file_name"] = $file_name;
-        
-        $this->load->library("upload", $config);
-
-        $upload = $this->upload->do_upload("file");
-
-        if ($upload) {
-
-            // $uploaded_file = $this->upload->data("file_name");
-
-            $this->product_image_model->add(
-                array(
-                    "img_url"       => $file_name,
-                    "rank"          => 0,
-                    "isActive"      => 1,
-                    "isCover"       => 0,
-                    "createdAt"     => date("Y-m-d H:i:s"),
-                    "product_id"    => $id
-                )
-            );
-        } else {
-            echo   "Bir Hata Oluştu!";
-        }
-
-    }
-
-    public function refresh_image_list($id){
-
-        $viewData = new stdClass();
-
-        $viewData->viewFolder = $this->viewFolder;
-        $viewData->subViewFolder = "image";
-
-        $viewData->item_images = $this->product_image_model->get_all(
-            array(
-                "product_id" => $id
-            )
-        );
-
-        $render_html = $this->load->view("{$viewData->viewFolder}/{$viewData->subViewFolder}/render_elements/image_list_v", $viewData, true);
-
-        echo $render_html;
-
     }
 
 
