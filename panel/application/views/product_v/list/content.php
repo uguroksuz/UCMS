@@ -27,12 +27,12 @@
                 <tbody class="sortable" data-url="<?php echo base_url("product/rankSetter"); ?>">
                     <?php foreach ($items as $item) {?>
                         <tr id="ord-<?php echo $item->id; ?>">
-                            <td><i class="fa fa-reorder"></i></td>
-                            <td><?php echo $item->id; ?></td>
+                            <td class="text-center"><i class="fa fa-reorder"></i></td>
+                            <td class="text-center"><?php echo $item->id; ?></td>
                             <td><?php echo $item->title; ?></td>
                             <td><?php echo $item->url; ?></td>
                             <td><?php echo $item->description; ?></td>
-                            <td>
+                            <td class="text-center">
                                 <input
                                     data-url="<?php echo base_url("product/isActiveSetter/$item->id"); ?>"
                                     class="isActive"
@@ -40,7 +40,7 @@
                                     data-switchery 
                                     <?php echo ($item->isActive) ? "checked" : "" ?> />
                             </td>
-                            <td>
+                            <td class="text-center">
                                 <button data-url="<?php echo base_url("product/delete/$item->id"); ?>" class="btn btn-xs btn-outline btn-warning remove-btn"><i class="fa fa-trash"></i> Sil</button>
                                 <a href="<?php echo base_url("product/update_form/$item->id"); ?>" class="btn btn-xs btn-outline btn-primary"><i class="fa fa-edit"></i> Düzenle</a>
                                 <a href="<?php echo base_url("product/image_form/$item->id"); ?>" class="btn btn-xs btn-outline btn-dark"><i class="fa fa-image"></i> Resimler</a>
