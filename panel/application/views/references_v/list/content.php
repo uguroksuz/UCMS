@@ -2,7 +2,7 @@
     <div class="col-md-12">
         <h4 class="m-b-lg">
             Referans Listesi
-            <a href="<?php echo base_url("references/new_form"); ?>" class="btn btn-sm btn-outline btn-primary pull-right"><i class="fa fa-plus"></i> Yeni Haber Ekle</a>
+            <a href="<?php echo base_url("references/new_form"); ?>" class="btn btn-sm btn-outline btn-primary pull-right"><i class="fa fa-plus"></i> Yeni Referans Ekle</a>
         </h4>
 
     </div><!-- END column -->
@@ -49,7 +49,7 @@
                                 <button data-url="<?php echo base_url("references/delete/$item->id"); ?>" class="btn btn-xs btn-outline btn-warning remove-btn"><i class="fa fa-trash"></i> Sil</button>
                                 <a href="<?php echo base_url("references/update_form/$item->id"); ?>" class="btn btn-xs btn-outline btn-primary"><i class="fa fa-edit"></i> Düzenle</a>
                             </td>
-                        </tr> 
+                        </tr>
                     <?php } ?>
                     
                 </tbody>
