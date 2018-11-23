@@ -25,11 +25,29 @@
 						<label for="control-demo-6" class="">Haberin Türü</label>
 						<div id="control-demo-6" class="">
 							<select class="form-control news_type_select" name="news_type">
-								<option value="image">Resim</option>
-								<option value="video">Video</option>
+								<option <?php echo (isset($news_type) && $news_type == "image") ? "selected" : ""; ?> value="image">Resim</option>
+								<option <?php echo (isset($news_type) && $news_type == "video") ? "selected" : ""; ?> value="video">Video</option>
 							</select>
 						</div>
                     </div><!-- .form-group -->
+
+                    <?php if(isset($form_error)){ ?>
+
+                    <div class="form-group image_upload_container" style="display: <?php echo ($news_type == "image") ? "block" : "none"; ?>">
+                        <label for="exampleInputFile">Görsel Seçiniz</label>
+                        <input type="file" name="image_url" id="exampleInputFile" class="form-control">
+                    </div>
+
+                    <div class="form-group video_url_container" style="display: <?php echo ($news_type == "video") ? "block" : "none"; ?>">
+                        <label>Video Url</label>
+                        <input class="form-control" id="exampleInputEmail1" placeholder="Video bağlantısını buraya yapıştırınız." name="video_url">
+                        <?php if (isset($form_error)) { ?>
+                            <small class="input-form-error"><?php echo form_error("video_url"); ?></small>
+                        <?php }?>
+                    </div>
+
+                    <?php } else { ?> 
+                    
                     <div class="form-group image_upload_container">
                         <label for="exampleInputFile">Görsel Seçiniz</label>
                         <input type="file" name="image_url" id="exampleInputFile" class="form-control">
@@ -38,10 +56,10 @@
                     <div class="form-group video_url_container">
                         <label>Video Url</label>
                         <input class="form-control" id="exampleInputEmail1" placeholder="Video bağlantısını buraya yapıştırınız." name="video_url">
-                        <?php if (isset($form_error)) { ?>
-                            <small class="input-form-error"><?php echo form_error("video_url"); ?></small>
-                        <?php }?>
                     </div>
+                    
+                    <?php } ?>
+
 
                     <button type="submit" class="btn btn-outline btn-primary btn-md">Kaydet</button>
                     <a href="<?php echo base_url("news"); ?>" class="btn btn-outline btn-danger btn-md">İptal</a>

@@ -66,11 +66,10 @@ class News extends CI_Controller
 
             }
 
-
-
-
         } else if($news_type == "video"){
-            # code...
+
+            $this->form_validation->set_rules("video_url", "Video URL", "required|trim");
+
         }
         
 
@@ -130,6 +129,7 @@ class News extends CI_Controller
             $viewData->viewFolder = $this->viewFolder;
             $viewData->subViewFolder = "add";
             $viewData->form_error = true;
+            $viewData->news_type = $news_type;
 
             $this->load->view("{$viewData->viewFolder}/{$viewData->subViewFolder}/index", $viewData);
         }
