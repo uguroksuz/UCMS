@@ -60,7 +60,7 @@ class News extends CI_Controller
                     "type"      =>"error"
                 );
 
-            // işlem sonucunu sessiona yazıyoruz.
+            // işlem sonucunu session yazıyoruz.
             $this->session->set_flashdata("alert", $alert);
             redirect(base_url("news/new_form"));
 
@@ -87,17 +87,63 @@ class News extends CI_Controller
 
 
         if ($validate) {
-            
-            $insert = $this->news_model->add(
-                array(
+
+
+            if($news_type == "image"){
+
+                $file_name = convertToSeo(pathinfo($_FILES["img_url"]["name"], PATHINFO_FILENAME)) . "." . pathinfo($_FILES["img_url"]["name"], PATHINFO_EXTENSION);
+
+                $config["allowed_types"] = "jpg|jepg|png";
+                $config["upload_path"] = "uploads/$this->viewFolder/";
+                $config["file_name"] = $file_name;
+                
+                $this->load->library("upload", $config);
+
+                $upload = $this->upload->do_upload("img_url");
+
+                if ($upload) {
+
+                    $uploaded_file = $this->upload->data("file_name");
+
+                    $data =  array(
+                        "title"         => $this->input->post("title"),
+                        "description"   => $this->input->post("description"),
+                        "url"           => convertToSeo($this->input->post("title")),
+                        "news_type"     => $news_type,
+                        "img_url"     => $uploaded_file,
+                        "video_url"     => "#",
+                        "rank"          => 0,
+                        "isActive"      => 1,
+                        "createdAt"     => date("Y-m-d H:i:s")
+                    );
+
+                } else {
+                    $alert = array(
+                        "title"      =>"İşlem Başarısız.",
+                        "message"    =>"Görsel yüklenirken bir problem oluştu.",
+                        "type"      =>"error"
+                    );
+
+                    $this->session->set_flashdata("alert", $alert);
+
+                    redirect(base_url("news/new_form"));
+                }
+
+            } elseif ($news_type == "video") {
+                $data =  array(
                     "title"         => $this->input->post("title"),
                     "description"   => $this->input->post("description"),
                     "url"           => convertToSeo($this->input->post("title")),
+                    "news_type"     => $news_type,
+                    "img_url"     => "#",
+                    "video_url"     => $this->input->post("video_url"),
                     "rank"          => 0,
                     "isActive"      => 1,
                     "createdAt"     => date("Y-m-d H:i:s")
-                )
-            );
+                );
+            }
+            
+            $insert = $this->news_model->add($data);
 
             //TODO: alert sistemi eklenecek.
             if ($insert) {

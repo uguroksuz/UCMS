@@ -2,7 +2,7 @@
     <div class="col-md-12">
         <h4 class="m-b-lg">
             Haber Listesi
-            <a href="<?php echo base_url("news/new_form"); ?>" class="btn btn-outline btn-primary pull-right"><i class="fa fa-plus"></i> Yeni Ekle</a>
+            <a href="<?php echo base_url("news/new_form"); ?>" class="btn btn-sm btn-outline btn-primary pull-right"><i class="fa fa-plus"></i> Yeni Haber Ekle</a>
         </h4>
 
     </div><!-- END column -->

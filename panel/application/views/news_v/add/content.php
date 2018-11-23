@@ -35,7 +35,7 @@
 
                     <div class="form-group image_upload_container" style="display: <?php echo ($news_type == "image") ? "block" : "none"; ?>">
                         <label for="exampleInputFile">Görsel Seçiniz</label>
-                        <input type="file" name="image_url" id="exampleInputFile" class="form-control">
+                        <input type="file" name="img_url" id="exampleInputFile" class="form-control">
                     </div>
 
                     <div class="form-group video_url_container" style="display: <?php echo ($news_type == "video") ? "block" : "none"; ?>">
@@ -50,7 +50,7 @@
                     
                     <div class="form-group image_upload_container">
                         <label for="exampleInputFile">Görsel Seçiniz</label>
-                        <input type="file" name="image_url" id="exampleInputFile" class="form-control">
+                        <input type="file" name="img_url" id="exampleInputFile" class="form-control">
                     </div>
 
                     <div class="form-group video_url_container">
