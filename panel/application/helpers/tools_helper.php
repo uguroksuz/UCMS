@@ -7,3 +7,8 @@ function convertToSeo($text){
    
     return strtolower(str_replace($tr, $convert, $text));
 }
+
+function get_readable_date($date)
+{
+    return strftime('%e %B %Y', strtotime($date));
+}
