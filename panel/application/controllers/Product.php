@@ -423,11 +423,11 @@ class Product extends CI_Controller
 
         if ($upload) {
 
-            // $uploaded_file = $this->upload->data("file_name");
+            $uploaded_file = $this->upload->data("file_name");
 
             $this->product_image_model->add(
                 array(
-                    "img_url"       => $file_name,
+                    "img_url"       => $uploaded_file,
                     "rank"          => 0,
                     "isActive"      => 1,
                     "isCover"       => 0,
