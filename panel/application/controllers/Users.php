@@ -6,7 +6,13 @@ class Users extends CI_Controller
     public $viewFolder = "";
 
      public function __construct(){
+         
         parent::__construct();
+
+        if(!get_active_user()){
+			redirect(base_url("login"));
+        }
+        
         $this->viewFolder = "users_v";
 
         $this->load->model("user_model");
@@ -371,6 +377,5 @@ class Users extends CI_Controller
 
         }
     }
-
 
 }
