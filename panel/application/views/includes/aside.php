@@ -116,7 +116,7 @@
           </a>
           <ul class="submenu">
             <li><a href="<?php echo base_url("portfolio_categories"); ?>"><span class="menu-text">Portfolyo Kategorileri</span></a></li>
-            <li><a href="<?php echo base_url(""); ?>"><span class="menu-text">Portfolyo</span></a></li>
+            <li><a href="<?php echo base_url("portfolio"); ?>"><span class="menu-text">Portfolyo</span></a></li>
           </ul>
         </li>
 

@@ -24,7 +24,7 @@
 
                     <div class="row">
                         <div class="col-md-4">
-                            <label for="datetimepicker1">Inline Display</label>
+                            <label for="datetimepicker1">Eğitim Tarihi</label>
                             <input type="hidden" name="event_date"  id="datetimepicker1" data-plugin="datetimepicker" data-options="{ inline: true, viewMode: 'days', format: 'YYYY-MM-DD HH:mm:ss' }">
                         </div><!-- END column -->
 
@@ -33,6 +33,8 @@
                             <input type="file" name="img_url" id="exampleInputFile" class="form-control">
                         </div>
                     </div>
+
+
                     <button type="submit" class="btn btn-outline btn-primary btn-md">Kaydet</button>
                     <a href="<?php echo base_url("courses"); ?>" class="btn btn-outline btn-danger btn-md">İptal</a>
                 </form>
