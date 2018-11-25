@@ -109,5 +109,124 @@ class Userop extends CI_Controller{
         
     }
 
+    public function forget_password(){
+
+        if (get_active_user()) {
+            redirect(base_url());
+        }
+
+        $viewData = new stdClass();
+        
+        // View e gönderilecek değişkenlerin set edilmesi
+        $viewData->viewFolder = $this->viewFolder;
+        $viewData->subViewFolder = "forget_password";
+
+        $this->load->view("{$viewData->viewFolder}/{$viewData->subViewFolder}/index", $viewData);
+    }
+
+    public function reset_password(){
+
+        $this->load->library("form_validation");
+
+        //kurallar yazılır..            
+
+        $this->form_validation->set_rules("email", "E-posta", "required|trim|valid_email");
+        
+        $this->form_validation->set_message(
+            array(
+                "required"      => "{field} alanı doldurulmalıdır.",
+                "valid_email"   => "Lütfen geçerli bir e-posta adresi giriniz.",
+            )
+        );
+
+        if ($this->form_validation->run() === FALSE) {
+            
+            $viewData = new stdClass();
+
+            $viewData->viewFolder = $this->viewFolder;
+            $viewData->subViewFolder = "forget_password";
+            $viewData->form_error = true;
+
+            $this->load->view("{$viewData->viewFolder}/{$viewData->subViewFolder}/index", $viewData);
+
+        }else {
+            
+            $user = $this->user_model->get(
+                array(
+                    "isActive"  => 1,
+                    "email"     => $this->input->post("email")
+                )
+            );
+
+            if ($user) {
+
+                $this->load->helper("string");
+                $temp_password = random_string();
+
+        
+                $send = send_email($user->email, "Şifremi unuttum!", "CMS'e geçici olarak <b>{$temp_password}</b> şifresi ile giriş yapabilirsiniz.");
+        
+                if ($send == true) {
+                    echo "E-posta gönderilmiştir.";
+
+                    $this->user_model->update(
+                        array(
+                            "id" => $user->id
+                        ),
+                        array(
+                            "password" => md5($temp_password)
+                        )
+                    );
+
+                    $alert = array(
+                        "title"      =>"İşlem Başarılı",
+                        "message"    =>"Şifreniz E-posta Adresine Gönderilmiştir.",
+                        "type"      =>"success"
+                    );
+    
+                    $this->session->set_flashdata("alert", $alert);
+    
+                    redirect(base_url("login"));
+
+                    die();
+
+                } else {
+
+                    //echo $this->email->print_debugger();
+
+                    $alert = array(
+                        "title"      =>"İşlem Başarısız",
+                        "message"    =>"E-posta gönderilirken bir problem oluştu",
+                        "type"      =>"error"
+                    );
+    
+                    $this->session->set_flashdata("alert", $alert);
+    
+                    redirect(base_url("reset_password"));
+
+                    die();
+
+                }
+                    
+            } else {
+
+                $alert = array(
+                    "title"      =>"İşlem Başarısız",
+                    "message"    =>"Böyle bir kullanıcı bulunamadı",
+                    "type"      =>"error"
+                );
+
+                $this->session->set_flashdata("alert", $alert);
+
+                redirect(base_url("reset_password"));
+                    
+            }
+
+
+        }
+
+    }
+
+
 }
 
