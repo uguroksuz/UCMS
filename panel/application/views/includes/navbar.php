@@ -1,3 +1,4 @@
+<?php $settings = get_settings(); ?>
 <nav id="app-navbar" class="navbar navbar-inverse navbar-fixed-top primary">
   
   <!-- navbar header -->
@@ -18,8 +19,15 @@
     </button>
 
     <a href="<?php echo base_url() ?>" class="navbar-brand">
-      <span class="brand-icon"><i class="fa fa-gg"></i></span>
-      <span class="brand-name">Infinity</span>
+      <span class="brand-icon">
+        <!-- <i class="fa fa-gg"></i> -->
+        <?php if($settings->logo !== "default"){ ?>
+            <img src="<?php echo base_url("uploads/settings_v/$settings->logo"); ?>" alt="<?php echo $settings->company_name; ?>">
+          <?php } else { ?>
+            <i class="fa fa-gg"></i>
+          <?php } ?>
+      </span>
+      <span class="brand-name"><?php echo $settings->company_name; ?></span>
     </a>
   </div><!-- .navbar-header -->
   

@@ -1,11 +1,16 @@
 <?php $user = get_active_user();?>
+<?php $settings = get_settings(); ?>
 
 <aside id="menubar" class="menubar light">
   <div class="app-user">
     <div class="media">
       <div class="media-left">
         <div class="avatar avatar-md avatar-circle">
-          <a href="javascript:void(0)"><img class="img-responsive" src="<?php echo base_url("assets"); ?>/assets/images/221.jpg" alt="avatar"/></a>
+          <a href="javascript:void(0)">
+            <img  class="img-responsive" 
+                  src="<?php echo base_url("assets"); ?>/assets/images/221.jpg" 
+                  alt="<?php echo $user->full_name; ?>"/>
+          </a>
         </div><!-- .avatar -->
       </div>
       <div class="media-body">
@@ -62,7 +67,7 @@
         </li>
 
         <li>
-          <a href="javascript:void(0)">
+          <a href="<?php echo base_url("settings") ?>">
             <i class="menu-icon zmdi zmdi-settings zmdi-hc-lg"></i>
             <span class="menu-text">Ayarlar</span>
           </a>
