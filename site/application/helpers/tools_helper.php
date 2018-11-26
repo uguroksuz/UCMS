@@ -71,3 +71,20 @@ function get_portfolio_cover_image($id){
     return !empty($cover_image) ? $cover_image->img_url : "default";
     
 }
+
+function get_settings(){
+
+    $t = &get_instance();
+
+    // $settings = $t->session->userdata("settings");
+
+    // if (empty($settings)) {
+        $t->load->model('setting_model'); 
+        $settings = $t->setting_model->get();
+
+    //     $t->session->set_userdata("settings", $settings);
+    // }
+
+    return $settings;
+
+}
