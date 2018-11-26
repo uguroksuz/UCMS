@@ -94,7 +94,7 @@
                         </li>
 
                         <li class="nav-item">
-                          <a href="<?php echo base_url(); ?>" class="nav-link">Eğitimler</a>
+                          <a href="<?php echo base_url("egitim-listesi"); ?>" class="nav-link">Eğitimler</a>
                         </li>
 
                         <li class="nav-item">
