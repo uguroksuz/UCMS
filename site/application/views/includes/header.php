@@ -77,6 +77,7 @@
                             <li ><a href="<?php echo base_url("portfolyo-listesi"); ?>">Portfolio</a></li>
                             <li ><a href="features-backgrounds.html">Haberler</a></li>
                             <li ><a href="<?php echo base_url("referanslar"); ?>">Referanslar</a></li>
+                            <li ><a href="<?php echo base_url("hizmetlerimiz"); ?>">Hizmetlerimiz</a></li>
                           </ul>
                         </li>
 
