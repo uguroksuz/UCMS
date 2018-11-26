@@ -76,7 +76,7 @@
                             <li ><a href="features-dark-page.html">Hakkımızda</a></li>
                             <li ><a href="<?php echo base_url("portfolyo-listesi"); ?>">Portfolio</a></li>
                             <li ><a href="features-backgrounds.html">Haberler</a></li>
-                            <li ><a href="features-grid.html">Referanslar</a></li>
+                            <li ><a href="<?php echo base_url("referanslar"); ?>">Referanslar</a></li>
                           </ul>
                         </li>
 
@@ -98,7 +98,7 @@
                         </li>
 
                         <li class="nav-item">
-                          <a href="<?php echo base_url(); ?>" class="nav-link">Markalar</a>
+                          <a href="<?php echo base_url("markalar"); ?>" class="nav-link">Markalar</a>
                         </li>
 
                         <li class="nav-item">
