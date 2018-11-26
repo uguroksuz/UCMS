@@ -90,7 +90,7 @@
                         </li>
 
                         <li class="nav-item">
-                          <a href="<?php echo base_url(); ?>" class="nav-link">Ürünler</a>
+                          <a href="<?php echo base_url("urun-listesi"); ?>" class="nav-link">Ürünler</a>
                         </li>
 
                         <li class="nav-item">
