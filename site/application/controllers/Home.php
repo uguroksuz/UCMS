@@ -248,11 +248,11 @@ class Home extends CI_Controller{
             "img_height"    => 50,
             "expiration"    => 7200,
             "word_length"   => 5,
-            "font_size"     => 16,
+            "font_size"     => 34,
             "img_id"        => "captcha_img",
             "pool"          => '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ',
             "colors"        => array(
-                "background" => array(56,255,45),
+                "background" => array(255,255,255),
                 "border"     => array(255,255,255),
                 "text"       => array(0,0,0),
                 "grid"       => array(255,40,40)
