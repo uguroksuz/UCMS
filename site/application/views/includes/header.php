@@ -19,7 +19,7 @@
 
             <!-- logo -->
             <div id="logo" class="logo">
-              <a href="index.html"><img id="logo_img" src="<?php echo base_url("assets/images"); ?>/logo_purple.png" alt="The Project"></a>
+              <a href="<?php echo base_url(); ?>"><img id="logo_img" src="<?php echo base_url("assets/images"); ?>/logo_purple.png" alt="The Project"></a>
             </div>
 
             <!-- name-and-slogan -->
@@ -104,7 +104,7 @@
                   </li>
 
                   <li class="nav-item">
-                    <a href="<?php echo base_url(); ?>" class="nav-link">İletişim</a>
+                    <a href="<?php echo base_url("iletisim"); ?>" class="nav-link">İletişim</a>
                   </li>
 
               
