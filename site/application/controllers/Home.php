@@ -10,7 +10,12 @@ class Home extends CI_Controller{
     }
 
     public function index(){
-        echo $this->viewFolder;
+
+        $viewData =  new stdClass();
+
+        $viewData->viewFolder = "home_v";
+        $this->load->view($viewData->viewFolder, $viewData);
+        
     }
 
     public function product_list(){
