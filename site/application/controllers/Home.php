@@ -185,8 +185,7 @@ class Home extends CI_Controller{
         
     }
 
-    public function brand_list()
-    {
+    public function brand_list(){
         $viewData = new stdClass();
         $viewData->viewFolder = "brand_list_v";
 
@@ -349,13 +348,88 @@ class Home extends CI_Controller{
             }
 
             redirect(base_url("iletisim"));
-            
-            
-        }
-        
-        
-        
-        
+              
+        }        
     }
 
-}
+    public function news_list(){
+    
+        $viewData = new stdClass();
+        $viewData->viewFolder = "news_list_v";
+
+        $this->load->model("news_model");
+        
+        
+
+        $viewData->news_list = $this->news_model->get_all(
+            array(
+                "isActive" => 1
+            ), "rank DESC"
+        );
+
+        $this->load->view($viewData->viewFolder, $viewData);
+
+    }   
+    
+    public function news($url){
+    
+        if ($url != "") {
+
+            $viewData = new stdClass();
+            $viewData->viewFolder = "news_v";
+
+            $this->load->model("news_model");
+            
+            $news = $this->news_model->get(
+                array(
+                    "isActive"  => 1,
+                    "url"       => $url,
+                )
+            );
+
+            if ($news) {
+
+                $viewData->news = $news;
+
+                $viewData->recent_news_list = $this->news_model->get_all(
+                    array(
+                        "isActive"  => 1,
+                        "id !="     => $news->id
+                    ), 
+                    "rank DESC",
+                    array(
+                        "count" => 4,
+                        "start" =>0
+                    )
+                );
+
+                //viewCount Değerini Arttırma...
+                $viewCount = $news->viewCount + 1;
+                $this->news_model->update(
+                    array(
+                        "id" => $news->id
+                    ),
+                    array(
+                        "viewCount" => $viewCount
+                    )
+                );
+
+                $viewData->news->viewCount = $viewCount;
+                $viewData->opengraph = true;
+
+                $this->load->view($viewData->viewFolder, $viewData);
+                
+            } else {
+                //TODO: Alert
+            }
+            
+
+
+        } else {
+            //TODO: Alert
+        }
+        
+
+    }    
+
+} //Class END
