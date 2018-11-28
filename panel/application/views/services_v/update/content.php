@@ -26,7 +26,7 @@
                     
                     <div class="row">
                         <div class="col-md-1 image_upload_container">
-                            <img width="50" src="<?php echo base_url("uploads/{$viewFolder}/$item->img_url"); ?>" alt="<?php echo $item->img_url; ?>">
+                            <img width="50" src="<?php echo get_picture($viewFolder, $item->img_url, "350x217");?>" alt="<?php echo $item->img_url; ?>">
                         </div>
                         <div class="col-md-9 form-group image_upload_container">
                             <label for="exampleInputFile">Görsel Seçiniz</label>

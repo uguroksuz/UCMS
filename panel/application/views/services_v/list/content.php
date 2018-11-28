@@ -32,10 +32,10 @@
                             <td><?php echo $item->title; ?></td>
                             <td><?php echo $item->url; ?></td>
                             <td class="text-center">
-                                <img src="<?php echo base_url("uploads/{$viewFolder}/$item->img_url"); ?>" 
+                                <img src="<?php echo get_picture($viewFolder, $item->img_url, "350x217");?>" 
                                         alt="<?php echo $item->img_url; ?>" 
                                         class="img-rounded"
-                                        width="30">
+                                        width="75">
                             </td>
                             <td class="text-center">
                                 <input
