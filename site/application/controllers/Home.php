@@ -16,6 +16,8 @@ class Home extends CI_Controller{
         $viewData =  new stdClass();
 
         $this->load->model('slide_model');
+
+        
         
         $slides = $this->slide_model->get_all(
             array(
@@ -25,6 +27,7 @@ class Home extends CI_Controller{
 
         $viewData->slides = $slides;
         $viewData->viewFolder = "home_v";
+        
         $this->load->view($viewData->viewFolder, $viewData);
         
     }
@@ -446,6 +449,15 @@ class Home extends CI_Controller{
         }
         
 
-    }    
+    }
+
+    public function popup_never_show_again(){
+        
+        $popup_id = $this->input->post("popup_id");
+
+        set_cookie($popup_id, "true", 60*60*24*365);
+
+
+    }
 
 } //Class END

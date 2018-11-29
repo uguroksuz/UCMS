@@ -144,3 +144,18 @@ function get_picture($path = "", $picture = "", $resolution = "50x50"){
 
     return $picture;
 }
+
+function get_popup_service($page){
+
+    $t = &get_instance();
+
+    $t->load->model('popup_model');
+    $popup = $t->popup_model->get(
+        array(
+            "isActive"  => 1,
+            "page"      => $page
+        )
+    );
+
+    return (!empty($popup)) ? $popup : false;
+}

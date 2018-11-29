@@ -163,7 +163,7 @@
         </li>
 
         <li>
-          <a href="javascript:void(0)">
+          <a href="<?php echo base_url("popups");?>">
             <i class="menu-icon zmdi zmdi-lamp zmdi-hc-lg"></i>
             <span class="menu-text">Popup Hizmeti</span>
           </a>

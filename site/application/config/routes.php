@@ -73,3 +73,4 @@ $route['abone-ol'] = "home/make_me_member";
 $route['haberler'] = "home/news_list";
 $route['haber/(:any)'] = "home/news/$1";
 
+$route['bir-daha-gosterme'] = "home/popup_never_show_again";
