@@ -41,3 +41,11 @@ th{
 .w-300{
     width: 300px;
 }
+.button-information-container{
+    display: none;
+    background: #fbfbfb;
+    border: 1px solid #ddd;
+    padding: 12px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
