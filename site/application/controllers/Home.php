@@ -377,8 +377,6 @@ class Home extends CI_Controller{
         $viewData->viewFolder = "news_list_v";
 
         $this->load->model("news_model");
-        
-        
 
         $viewData->news_list = $this->news_model->get_all(
             array(
@@ -451,13 +449,75 @@ class Home extends CI_Controller{
 
     }
 
+    /******************* Galeri için Kullanılan Metotlar *****************/
+
+    public function image_gallery_list(){
+        
+        $viewData = new stdClass();
+        $viewData->viewFolder       = "galleries_v";
+        $viewData->subViewFolder    = "image_galleries";
+        $viewData->viewName         = "list_content";
+
+        $this->load->model("gallery_model");
+
+        $viewData->galleries = $this->gallery_model->get_all(
+            array(
+                "isActive"      => 1,
+                "gallery_type"  =>"image"
+            ), "rank DESC"
+        );
+
+        $this->load->view($viewData->viewFolder, $viewData);
+
+    }
+    
+    public function image_gallery($gallery_url = ""){
+
+        if ($gallery_url) {
+
+            $viewData = new stdClass();
+            $viewData->viewFolder       = "galleries_v";
+            $viewData->subViewFolder    = "image_galleries";
+            $viewData->viewName         = "item_content";
+            $viewData->gallery          = get_gallery_by_url($gallery_url);
+            
+            $this->load->model("image_model");
+
+            $viewData->images = $this->image_model->get_all(
+                array(
+                    "isActive"      => 1,
+                    "gallery_id"    => $viewData->gallery->id
+                ), "rank DESC"
+            );
+
+            $this->load->view($viewData->viewFolder, $viewData);
+        }        
+
+    }
+
+    
+    public function video_gallery_list(){
+        
+    }
+    
+    public function video_gallery($gallery_url = ""){
+        
+    }
+
+    
+    public function file_gallery_list(){
+        
+    }
+    
+    public function file_gallery($gallery_url = ""){
+        
+    }
+    
     public function popup_never_show_again(){
         
         $popup_id = $this->input->post("popup_id");
 
         set_cookie($popup_id, "true", 60*60*24*365);
-
-
     }
 
 } //Class END

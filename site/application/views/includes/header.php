@@ -85,9 +85,9 @@
                   <li class="nav-item dropdown ">
                     <a href="#" class="nav-link dropdown-toggle" id="third-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Galeriler</a>
                     <ul class="dropdown-menu">
-                      <li ><a href="features-dark-page.html">Resim Galerileri</a></li>
-                      <li ><a href="features-typography.html">Video Galerileri</a></li>
-                      <li ><a href="features-backgrounds.html">Dosya Galerileri</a></li>
+                      <li ><a href="<?php echo base_url("fotograf-galerisi");?>">Resim Galerileri</a></li>
+                      <li ><a href="<?php echo base_url("video-galerisi");?>">Video Galerileri</a></li>
+                      <li ><a href="<?php echo base_url("dosya-galerisi");?>">Dosya Galerileri</a></li>
                     </ul>
                   </li>
 
