@@ -17,15 +17,12 @@
 
             <div class="row grid-space-20">
                 <?php 
-                if(!empty($images)){
-                foreach ($images as $image) {?>                
+                if(!empty($videos)){
+                foreach ($videos as $video) {?>                
                     <div class="col-3">
-                    <div class="overlay-container">
-                        <img src="<?php echo base_url("assets/images"); ?>/portfolio-1.jpg" alt="">
-                        <a href="<?php echo base_url("assets/images"); ?>/portfolio-1.jpg" class="overlay-link small popup-img" title="<?php echo $gallery->title; ?>">
-                        <i class="fa fa-plus"></i>
-                        </a>
-                    </div>
+                        <div class="embed-responsive embed-responsive-16by9">
+                            <iframe class="embed-responsive-item" src="//www.youtube.com/embed/<?php echo $video->url; ?>"></iframe>
+                        </div>
                     </div>
                 <?php } 
             } else {?>
@@ -38,7 +35,7 @@
 
             <?php } ?>
                 <div class="col-lg-12">
-                    <a href="<?php echo base_url("fotograf-galerisi");?>" class="btn btn-default">
+                    <a href="<?php echo base_url("video-galerisi");?>" class="btn btn-default">
                         <i class="fa fa-arrow-left"></i> Geri Dön
                     </a>
                 </div> 
