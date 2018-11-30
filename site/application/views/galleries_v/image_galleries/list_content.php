@@ -18,7 +18,7 @@
                         <div class="col-sm-4">
                             <div class="image-box shadow text-center mb-20">
                                 <div class="overlay-container overlay-visible">
-                                <img src="<?php echo base_url("assets/images"); ?>/portfolio-4.jpg" alt="">
+                                <img src="<?php echo get_gallery_cover_image($gallery->folder_name); ?>" alt="<?php echo $gallery->title;?>">
                                 <a href="<?php echo base_url("fotograf-galerisi/$gallery->url"); ?>" class="overlay-link"><i class="fa fa-link"></i></a>
                                 <div class="overlay-bottom hidden-xs">
                                     <div class="text">

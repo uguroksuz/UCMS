@@ -467,7 +467,6 @@ class Galleries extends CI_Controller
             
         $viewData->item = $item;
 
-
         if ($item->gallery_type == "image") {
 
             $viewData->items = $this->image_model->get_all(
@@ -476,6 +475,7 @@ class Galleries extends CI_Controller
                 ), "rank ASC"
             );
 
+            $viewData->folder_name = $item->folder_name;
 
         } else if($item->gallery_type == "file"){
 
@@ -500,7 +500,7 @@ class Galleries extends CI_Controller
         $this->load->view("{$viewData->viewFolder}/{$viewData->subViewFolder}/index", $viewData);
     }
 
-    public function file_upload($gallery_id, $gallery_type, $folder_name){
+    public function file_upload_old($gallery_id, $gallery_type, $folder_name){
 
         // $file_name = convetToseo($_FILES["file"]["name"]);
         // $ext = pathinfo($_FILES["file"]["name"], PATHINFO_EXTENSION);
@@ -538,12 +538,71 @@ class Galleries extends CI_Controller
 
     }
 
-    public function refresh_file_list($gallery_id, $gallery_type){
+    public function file_upload($gallery_id, $gallery_type, $folder_name){
+        
+        $file_name = convertToSeo(pathinfo($_FILES["file"]["name"], PATHINFO_FILENAME)) . "." . pathinfo($_FILES["file"]["name"], PATHINFO_EXTENSION);
+
+        if($gallery_type == "image"){
+
+            $image_252x156 = upload_picture($_FILES["file"]["tmp_name"], "uploads/$this->viewFolder/images/$folder_name/", 251, 156, $file_name );
+            $image_350x216 = upload_picture($_FILES["file"]["tmp_name"], "uploads/$this->viewFolder/images/$folder_name/", 350, 216, $file_name );
+            $image_851x606 = upload_picture($_FILES["file"]["tmp_name"], "uploads/$this->viewFolder/images/$folder_name/", 851, 606, $file_name );
+
+            if($image_252x156 && $image_350x216 && $image_851x606){
+
+                $this->image_model->add(
+                    array(
+                        "url"           => $file_name,
+                        "rank"          => 0,
+                        "isActive"      => 1,
+                        "createdAt"     => date("Y-m-d H:i:s"),
+                        "gallery_id"    => $gallery_id
+                    )
+                );
+            } else{
+                echo   "Bir Hata Oluştu!";                
+            }
+
+        } else{
+
+            $config["allowed_types"] = "jpg|jepg|png|png|pdf|doc|docx|txt";
+            $config["upload_path"] = "uploads/$this->viewFolder/files/$folder_name/";
+            $config["file_name"] = $file_name;
+            
+            $this->load->library("upload", $config);
+    
+            $upload = $this->upload->do_upload("file");
+
+            if ($upload) {
+
+                $uploaded_file = $this->upload->data("file_name");
+        
+                $this->file_model->add(
+                    array(
+                        "url"           => $uploaded_file,
+                        "rank"          => 0,
+                        "isActive"      => 1,
+                        "createdAt"     => date("Y-m-d H:i:s"),
+                        "gallery_id"    => $gallery_id
+                    )
+                );
+               
+            } else {
+                echo   "Bir Hata Oluştu!";
+            }
+
+        }
+
+
+    }
+
+    public function refresh_file_list($gallery_id, $gallery_type, $folder_name){
 
         $viewData = new stdClass();
 
         $viewData->viewFolder = $this->viewFolder;
         $viewData->subViewFolder = "image";
+        $viewData->folder_name = $folder_name;
 
         $model_name = ($gallery_type == "image") ? "image_model" : "file_model";
 

@@ -21,8 +21,8 @@
                 foreach ($images as $image) {?>                
                     <div class="col-3">
                     <div class="overlay-container">
-                        <img src="<?php echo base_url("assets/images"); ?>/portfolio-1.jpg" alt="">
-                        <a href="<?php echo base_url("assets/images"); ?>/portfolio-1.jpg" class="overlay-link small popup-img" title="<?php echo $gallery->title; ?>">
+                        <img src="<?php echo get_picture("galleries_v/images/$gallery->folder_name", $image->url, "251x156"); ?>" alt="">
+                        <a href="<?php echo get_picture("galleries_v/images/$gallery->folder_name", $image->url, "851x606"); ?>" class="overlay-link small popup-img" title="<?php echo $gallery->title; ?>">
                         <i class="fa fa-plus"></i>
                         </a>
                     </div>

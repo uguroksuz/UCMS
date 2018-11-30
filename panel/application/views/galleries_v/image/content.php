@@ -4,7 +4,7 @@
             <hr class="widget-separator">
             <div class="widget-body">
                 <form   action="<?php echo base_url("galleries/file_upload/$item->id/$item->gallery_type/$item->folder_name"); ?>"
-                        data-url="<?php echo base_url("galleries/refresh_file_list/$item->id/$item->gallery_type"); ?>"
+                        data-url="<?php echo base_url("galleries/refresh_file_list/$item->id/$item->gallery_type/$item->folder_name"); ?>"
                         class="dropzone" 
                         id="dropzone" 
                         data-plugin="dropzone" 

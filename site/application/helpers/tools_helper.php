@@ -145,6 +145,22 @@ function get_picture($path = "", $picture = "", $resolution = "50x50"){
     return $picture;
 }
 
+function get_gallery_cover_image($folderName){
+
+    $path = "panel/uploads/galleries_v/images/$folderName/350x216/";
+    if(file_exists(FCPATH. $path)){
+       if($handle = opendir($path)) {
+        while (($file = readdir($handle)) != false) {
+            if ($file != "." & $file != "..") {
+                return $path . $file;
+            }
+        }
+        }  
+    }else{
+        return base_url("assets/images/portfolio-4.jpg");
+    }
+}
+
 function get_popup_service($page){
 
     $t = &get_instance();

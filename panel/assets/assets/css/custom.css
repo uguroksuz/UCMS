@@ -19,9 +19,11 @@ th{
 .sortable{
     cursor: move;
 }
-
 .video_url_container{
     display: none;
+}
+.mx-auto{
+    margin: 0 auto;
 }
 .w-50{
     width: 50px;
