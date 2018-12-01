@@ -179,11 +179,29 @@
                     <div role="tabpanel" class="tab-pane fade" id="tab-7">
                         <div class="row">
                             <div class="col-md-3">
-                                <img src="<?php echo base_url("uploads/{$viewFolder}/$item->logo"); ?>" alt="<?php echo $item->company_name; ?>">
+                                <img src="<?php echo get_picture($viewFolder, $item->logo, "300x70"); ?>" alt="<?php echo $item->logo; ?>">
                             </div>
                             <div class="form-group col-md-3">
-                                <label for="exampleInputFile">Görsel Seçiniz</label>
+                                <label for="exampleInputFile">Masaüstü Logo Seçiniz</label>
                                 <input type="file" name="logo" id="exampleInputFile" class="form-control">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <img src="<?php echo get_picture($viewFolder, $item->logo, "150x35"); ?>" alt="<?php echo $item->logo_mobile; ?>">
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label for="exampleInputFile">Mobil Logo Seçiniz</label>
+                                <input type="file" name="logo_mobile" id="exampleInputFile" class="form-control">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <img src="<?php echo get_picture($viewFolder, $item->logo, "32x32"); ?>" alt="<?php echo $item->favicon; ?>">
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label for="exampleInputFile">Favicon Seçiniz</label>
+                                <input type="file" name="favicon" id="exampleInputFile" class="form-control">
                             </div>
                         </div>
                     </div><!-- .tab-pane  -->

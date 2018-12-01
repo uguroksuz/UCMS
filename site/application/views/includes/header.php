@@ -19,7 +19,7 @@
 
             <!-- logo -->
             <div id="logo" class="logo">
-              <a href="<?php echo base_url(); ?>"><img id="logo_img" src="<?php echo base_url("assets/images"); ?>/logo_purple.png" alt="The Project"></a>
+              <a href="<?php echo base_url(); ?>"><img id="logo_img" src="<?php echo get_picture("settings_v", $settings->logo, "150x35");?>" alt="<?php echo $settings->company_name; ?>"></a>
             </div>
 
             <!-- name-and-slogan -->
@@ -48,7 +48,11 @@
 
                 <!-- logo -->
                 <div id="logo-mobile" class="logo">
-                  <a href="index.html"><img id="logo-img-mobile" src="<?php echo base_url("assets/images"); ?>/logo_purple.png" alt="The Project"></a>
+                  <a href="index.html">
+                    <img  id="logo-img-mobile" 
+                          src="<?php echo get_picture("settings_v", $settings->logo_mobile, "150x35"); ?>"  
+                          alt="<?php echo $settings->company_name;?>">
+                  </a>
                 </div>
 
                 <!-- name-and-slogan -->
