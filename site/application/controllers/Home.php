@@ -18,6 +18,7 @@ class Home extends CI_Controller{
         $this->load->model('slide_model');
         $this->load->model('reference_model');
         $this->load->model('service_model');
+        $this->load->model('testimonial_model');
 
         
         
@@ -37,9 +38,16 @@ class Home extends CI_Controller{
             ),"rank ASC"
         );
 
+        $testimonials = $this->testimonial_model->get_all(
+            array(
+                "isActive"  => 1,
+            ),"rank ASC"
+        );
+
         $viewData->slides = $slides;
         $viewData->references = $referances;
         $viewData->services = $services;
+        $viewData->testimonials = $testimonials;
         $viewData->viewFolder = "home_v";
         
         $this->load->view($viewData->viewFolder, $viewData);
