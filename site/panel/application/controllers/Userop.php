@@ -32,7 +32,7 @@ class Userop extends CI_Controller{
     public function do_login(){
 
         if (get_active_user()) {
-            redirect(base_url());           
+            redirect(base_url());
         }
 
         $this->load->library("form_validation");

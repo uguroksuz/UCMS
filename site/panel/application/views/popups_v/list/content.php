@@ -2,7 +2,9 @@
     <div class="col-md-12">
         <h4 class="m-b-lg">
             Popup Listesi
-            <a href="<?php echo base_url("popups/new_form"); ?>" class="btn btn-sm btn-outline btn-primary pull-right"><i class="fa fa-plus"></i> Yeni Popup Ekle</a>
+            <?php if (isAllowedWriteModule()) {?>
+                <a href="<?php echo base_url("popups/new_form"); ?>" class="btn btn-sm btn-outline btn-primary pull-right"><i class="fa fa-plus"></i> Yeni Popup Ekle</a>
+            <?php }?>
         </h4>
 
     </div><!-- END column -->
@@ -37,8 +39,12 @@
                                     <?php echo ($item->isActive) ? "checked" : "" ?> />
                             </td>
                             <td class="text-center w-150">
+                            <?php if (isAllowedDeleteModule()) {?>
                                 <button data-url="<?php echo base_url("popups/delete/$item->id"); ?>" class="btn btn-xs btn-outline btn-warning remove-btn"><i class="fa fa-trash"></i> Sil</button>
+                            <?php }?>
+                            <?php if (isAllowedUpdateModule()) {?>
                                 <a href="<?php echo base_url("popups/update_form/$item->id"); ?>" class="btn btn-xs btn-outline btn-primary"><i class="fa fa-edit"></i> Düzenle</a>
+                            <?php }?>
                             </td>
                         </tr>
                     <?php } ?>

@@ -46,8 +46,12 @@
                                     <?php echo ($item->isActive) ? "checked" : "" ?> />
                             </td>
                             <td class="text-center">
+                            <?php if (isAllowedDeleteModule()) {?>
                                 <button data-url="<?php echo base_url("brands/delete/$item->id"); ?>" class="btn btn-xs btn-outline btn-warning remove-btn"><i class="fa fa-trash"></i> Sil</button>
+                            <?php }?>
+                            <?php if (isAllowedDeleteModule()) {?>
                                 <a href="<?php echo base_url("brands/update_form/$item->id"); ?>" class="btn btn-xs btn-outline btn-primary"><i class="fa fa-edit"></i> Düzenle</a>
+                            <?php }?>
                             </td>
                         </tr>
                     <?php } ?>

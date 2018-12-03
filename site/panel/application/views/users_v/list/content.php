@@ -2,8 +2,8 @@
     <div class="col-md-12">
         <h4 class="m-b-lg">
             Kullanıcı Listesi
-            <?php if(isAdmin()){?>
-            <a href="<?php echo base_url("users/new_form"); ?>" class="btn btn-sm btn-outline btn-primary pull-right"><i class="fa fa-plus"></i> Yeni Kullanıcı Ekle</a>
+            <?php if(isAdmin() && isAllowedWriteModule()){?>
+                <a href="<?php echo base_url("users/new_form"); ?>" class="btn btn-sm btn-outline btn-primary pull-right"><i class="fa fa-plus"></i> Yeni Kullanıcı Ekle</a>
             <?php }?>
         </h4>
 
@@ -41,9 +41,15 @@
                                     <?php echo ($item->isActive) ? "checked" : "" ?> />
                             </td>
                             <td class="text-center w-400">
-                                <button data-url="<?php echo base_url("users/delete/$item->id"); ?>" class="btn btn-xs btn-outline btn-warning remove-btn"><i class="fa fa-trash"></i> Sil</button>
-                                <a href="<?php echo base_url("users/update_form/$item->id"); ?>" class="btn btn-xs btn-outline btn-primary"><i class="fa fa-edit"></i> Düzenle</a>
-                                <a href="<?php echo base_url("users/update_password_form/$item->id"); ?>" class="btn btn-xs btn-outline btn-purple"><i class="fa fa-key"></i> Şifre Değiştir</a>
+                                <?php if (isAllowedDeleteModule()) {?>
+                                    <button data-url="<?php echo base_url("users/delete/$item->id"); ?>" class="btn btn-xs btn-outline btn-warning remove-btn"><i class="fa fa-trash"></i> Sil</button>
+                                <?php }?>
+                                <?php if (isAllowedUpdateModule()) {?>
+                                    <a href="<?php echo base_url("users/update_form/$item->id"); ?>" class="btn btn-xs btn-outline btn-primary"><i class="fa fa-edit"></i> Düzenle</a>
+                                <?php }?>
+                                <?php if (isAllowedUpdateModule()) {?>                                
+                                    <a href="<?php echo base_url("users/update_password_form/$item->id"); ?>" class="btn btn-xs btn-outline btn-purple"><i class="fa fa-key"></i> Şifre Değiştir</a>
+                                <?php }?>
                             </td>
                         </tr>
                     <?php } ?>

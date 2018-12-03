@@ -18,9 +18,8 @@ class Dashboard extends CMS_Controller {
 
 	}
 	
-	public function index()
-	{
-				
+	public function index(){
+						
 		$viewData = new stdClass();
 		$viewData->viewFolder = $this->viewFolder;
 		$viewData->subViewFolder = "list";

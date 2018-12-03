@@ -212,7 +212,7 @@
         <div class="widget">
             <div class="widget-body">
                 <button type="submit" class="btn btn-outline btn-primary btn-md">Kaydet</button>
-                <a href="<?php echo base_url("users"); ?>" class="btn btn-outline btn-danger btn-md">İptal</a>
+                <a href="<?php echo base_url(); ?>" class="btn btn-outline btn-danger btn-md">İptal</a>
             </div>
         </div>
         </form>

@@ -2,7 +2,9 @@
     <div class="col-md-12">
         <h4 class="m-b-lg">
             Eğitim Listesi
-            <a href="<?php echo base_url("courses/new_form"); ?>" class="btn btn-sm btn-outline btn-primary pull-right"><i class="fa fa-plus"></i> Yeni Eğitim Ekle</a>
+            <?php if (isAllowedWriteModule()) {?>
+                <a href="<?php echo base_url("courses/new_form"); ?>" class="btn btn-sm btn-outline btn-primary pull-right"><i class="fa fa-plus"></i> Yeni Eğitim Ekle</a>
+            <?php }?>
         </h4>
 
     </div><!-- END column -->
@@ -27,8 +29,8 @@
                 <tbody class="sortable" data-url="<?php echo base_url("courses/rankSetter"); ?>">
                     <?php foreach ($items as $item) {?>
                         <tr id="ord-<?php echo $item->id; ?>">
-                            <td class="text-center"><i class="fa fa-reorder"></i></td>
-                            <td class="text-center"><?php echo $item->id; ?></td>
+                            <td class="text-center w-50"><i class="fa fa-reorder"></i></td>
+                            <td class="text-center w-50"><?php echo $item->id; ?></td>
                             <td><?php echo $item->title; ?></td>
                             <td><?php echo get_readable_date($item->event_date); ?></td>
                             <td class="text-center">
@@ -41,13 +43,17 @@
                                 <input
                                     data-url="<?php echo base_url("courses/isActiveSetter/$item->id"); ?>"
                                     class="isActive"
-                                    type="checkbox" 
+                                    type="checkbox"
                                     data-switchery 
                                     <?php echo ($item->isActive) ? "checked" : "" ?> />
                             </td>
-                            <td class="text-center">
+                            <td class="text-center w-200">
+                            <?php if (isAllowedDeleteModule()) {?>
                                 <button data-url="<?php echo base_url("courses/delete/$item->id"); ?>" class="btn btn-xs btn-outline btn-warning remove-btn"><i class="fa fa-trash"></i> Sil</button>
+                            <?php }?>
+                            <?php if (isAllowedUpdateModule()) {?>
                                 <a href="<?php echo base_url("courses/update_form/$item->id"); ?>" class="btn btn-xs btn-outline btn-primary"><i class="fa fa-edit"></i> Düzenle</a>
+                            <?php }?>
                             </td>
                         </tr>
                     <?php } ?>

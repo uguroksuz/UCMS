@@ -2,7 +2,9 @@
     <div class="col-md-12">
         <h4 class="m-b-lg">
             Ziyaretçi Notları
-            <a href="<?php echo base_url("testimonials/new_form"); ?>" class="btn btn-sm btn-outline btn-primary pull-right"><i class="fa fa-plus"></i> Yeni Ziyaretçi Notu Ekle</a>
+            <?php if (isAllowedWriteModule()) {?>
+                <a href="<?php echo base_url("testimonials/new_form"); ?>" class="btn btn-sm btn-outline btn-primary pull-right"><i class="fa fa-plus"></i> Yeni Ziyaretçi Notu Ekle</a>
+            <?php }?>
         </h4>
 
     </div><!-- END column -->
@@ -27,8 +29,8 @@
                 <tbody class="sortable" data-url="<?php echo base_url("testimonials/rankSetter"); ?>">
                     <?php foreach ($items as $item) {?>
                         <tr id="ord-<?php echo $item->id; ?>">
-                            <td class="text-center"><i class="fa fa-reorder"></i></td>
-                            <td class="text-center"><?php echo $item->id; ?></td>
+                            <td class="text-center w-50"><i class="fa fa-reorder"></i></td>
+                            <td class="text-center w-50"><?php echo $item->id; ?></td>
                             <td><?php echo $item->title; ?></td>
                             <td><?php echo character_limiter(strip_tags($item->description), 150); ?></td>
                             <td class="text-center">
@@ -45,9 +47,13 @@
                                     data-switchery 
                                     <?php echo ($item->isActive) ? "checked" : "" ?> />
                             </td>
-                            <td class="text-center">
-                                <button data-url="<?php echo base_url("testimonials/delete/$item->id"); ?>" class="btn btn-xs btn-outline btn-warning remove-btn"><i class="fa fa-trash"></i> Sil</button>
-                                <a href="<?php echo base_url("testimonials/update_form/$item->id"); ?>" class="btn btn-xs btn-outline btn-primary"><i class="fa fa-edit"></i> Düzenle</a>
+                            <td class="text-center w-300">
+                                <?php if (isAllowedDeleteModule()) {?>
+                                    <button data-url="<?php echo base_url("testimonials/delete/$item->id"); ?>" class="btn btn-xs btn-outline btn-warning remove-btn"><i class="fa fa-trash"></i> Sil</button>
+                                <?php }?>
+                                <?php if (isAllowedUpdateModule()) {?>
+                                    <a href="<?php echo base_url("testimonials/update_form/$item->id"); ?>" class="btn btn-xs btn-outline btn-primary"><i class="fa fa-edit"></i> Düzenle</a>
+                                <?php }?>
                             </td>
                         </tr>
                     <?php } ?>

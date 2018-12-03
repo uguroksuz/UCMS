@@ -1,6 +1,6 @@
 <?php
 
-class Users extends CMS_Controller 
+class Users extends CI_Controller 
 {
 
     public $viewFolder = "";
@@ -336,8 +336,6 @@ class Users extends CMS_Controller
         }
 
     }
-    
-    
 
     public function delete($id){
         $delete = $this->user_model->delete(

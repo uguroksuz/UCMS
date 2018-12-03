@@ -2,7 +2,9 @@
     <div class="col-md-12">
         <h4 class="m-b-lg">
             Galeri Listesi
+            <?php if (isAllowedWriteModule()) {?>
             <a href="<?php echo base_url("galleries/new_form"); ?>" class="btn btn-sm btn-outline btn-primary pull-right"><i class="fa fa-plus"></i> Yeni Galeri Ekle</a>
+            <?php }?>
         </h4>
 
     </div><!-- END column -->
@@ -28,8 +30,8 @@
                 <tbody class="sortable" data-url="<?php echo base_url("galleries/rankSetter"); ?>">
                     <?php foreach ($items as $item) {?>
                         <tr id="ord-<?php echo $item->id; ?>">
-                            <td class="text-center"><i class="fa fa-reorder"></i></td>
-                            <td class="text-center"><?php echo $item->id; ?></td>
+                            <td class="text-center w-50"><i class="fa fa-reorder"></i></td>
+                            <td class="text-center w-50"><?php echo $item->id; ?></td>
                             <td><?php echo $item->title; ?></td>
                             <td><?php echo $item->gallery_type; ?></td>
                             <td><?php echo $item->folder_name; ?></td>
@@ -42,8 +44,11 @@
                                     data-switchery 
                                     <?php echo ($item->isActive) ? "checked" : "" ?> />
                             </td>
-                            <td class="text-center">
+                            <td class="text-center w-300">
+                            <?php if (isAllowedDeleteModule()) {?>
                                 <button data-url="<?php echo base_url("galleries/delete/$item->id"); ?>" class="btn btn-xs btn-outline btn-warning remove-btn"><i class="fa fa-trash"></i> Sil</button>
+                            <?php }?>
+                            <?php if (isAllowedUpdateModule()) {?>
                                 <?php 
                                     if ($item->gallery_type == "image") {
                                         $button_icon = "fa-image";
@@ -58,7 +63,10 @@
                                 
                                 ?>                               
                                 <a href="<?php echo base_url("galleries/update_form/$item->id"); ?>" class="btn btn-xs btn-outline btn-primary"><i class="fa fa-edit"></i> Düzenle</a>
+                            <?php }?>
+                            <?php if (isAllowedWriteModule()) {?>
                                 <a href="<?php echo base_url($button_url); ?>" class="btn btn-xs btn-outline btn-dark"><i class="fa <?php echo $button_icon; ?>"></i> Galeri</a>
+                            <?php }?>  
                             </td>
                         </tr> 
                     <?php } ?>

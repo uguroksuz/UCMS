@@ -25,17 +25,6 @@ function get_active_user(){
     }
 }
 
-function isAdmin(){
-    $t = &get_instance();
-    $user = $t->session->userdata("user");
-    return true;
-    if ($user->user_role == "admin") {
-        return true;
-    }else{
-        return false;
-    }
-}
-
 function get_user_roles(){
     $t = &get_instance();
     setUserRoles();
@@ -56,6 +45,17 @@ function setUserRoles(){
         $roles[$role->id] = $role->permissions;
     }
     $t->session->set_userdata("user_roles", $roles);
+}
+
+function isAdmin(){
+    $t = &get_instance();
+    $user = $t->session->userdata("user");
+
+    if ($user->user_role_id == 1) {
+        return true;
+    }else{
+        return false;
+    }
 }
 
 function getControllerList(){
