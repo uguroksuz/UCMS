@@ -2,7 +2,9 @@
     <div class="col-md-12">
         <h4 class="m-b-lg">
             Marka Listesi
-            <a href="<?php echo base_url("brands/new_form"); ?>" class="btn btn-sm btn-outline btn-primary pull-right"><i class="fa fa-plus"></i> Yeni Marka Ekle</a>
+            <?php if (isAllowedWriteModule()) {?>
+                <a href="<?php echo base_url("brands/new_form"); ?>" class="btn btn-sm btn-outline btn-primary pull-right"><i class="fa fa-plus"></i> Yeni Marka Ekle</a>
+            <?php }?> 
         </h4>
 
     </div><!-- END column -->

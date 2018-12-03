@@ -80,6 +80,10 @@ class Userop extends CI_Controller{
                     "type"      =>"success"
                 );
 
+                /*********** Kullnıcı Yetkilerinin Session'a Aktarılması **************/
+                setUserRoles();
+                /*********** ****************************************** **************/
+
                 $this->session->set_userdata("user", $user);
                 $this->session->set_flashdata("alert", $alert);
 

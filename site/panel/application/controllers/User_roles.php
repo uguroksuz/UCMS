@@ -1,6 +1,6 @@
 <?php
 
-class Brands extends CMS_Controller 
+class User_roles extends CMS_Controller 
 {
 
     public $viewFolder = "";
@@ -12,8 +12,8 @@ class Brands extends CMS_Controller
 			redirect(base_url("login"));
         }
         
-        $this->viewFolder = "brands_v";
-        $this->load->model("brand_model");        
+        $this->viewFolder = "user_roles_v";
+        $this->load->model("user_role_model");        
     }
 
     public function index(){
@@ -22,8 +22,8 @@ class Brands extends CMS_Controller
         
 
         // Tablodan verilerin getirilmesi..
-        $items = $this->brand_model->get_all(
-            array(), "rank ASC"
+        $items = $this->user_role_model->get_all(
+            array()
         );
 
         // View e gönderilecek değişkenlerin set edilmesi
@@ -36,10 +36,6 @@ class Brands extends CMS_Controller
 
     public function new_form(){
 
-        if (!isAllowedWriteModule()) {
-            redirect(base_url("brands"));
-        }
-
         $viewData = new stdClass();
 
         $viewData->viewFolder = $this->viewFolder;
@@ -49,28 +45,8 @@ class Brands extends CMS_Controller
     }
 
     public function save(){
-
-        if (!isAllowedWriteModule()) {
-            redirect(base_url($this->router->fetch_class()));
-        }
         
-        $this->load->library("form_validation");
-
-        //kurallar yazılır..     
-            
-        if ($_FILES["img_url"]["name"] == "") {
-
-            $alert = array(
-                "title"      =>"İşlem Başarısız.",
-                "message"    =>"Lütfen bir gösel seçiniz.",
-                "type"      =>"error"
-            );
-
-        // işlem sonucunu session yazıyoruz.
-        $this->session->set_flashdata("alert", $alert);
-        redirect(base_url("brands/new_form"));
-
-        }          
+        $this->load->library("form_validation");    
 
         $this->form_validation->set_rules("title", "Başlık", "required|trim");
 
@@ -85,63 +61,39 @@ class Brands extends CMS_Controller
 
         if ($validate) {           
 
-            $file_name = convertToSeo(pathinfo($_FILES["img_url"]["name"], PATHINFO_FILENAME)) . "." . pathinfo($_FILES["img_url"]["name"], PATHINFO_EXTENSION);
-
-            $image_555x343 = upload_picture($_FILES["img_url"]["tmp_name"], "uploads/$this->viewFolder", 555, 343, $file_name );
-            $image_350x217 = upload_picture($_FILES["img_url"]["tmp_name"], "uploads/$this->viewFolder", 350, 217, $file_name );
-
-            if ($image_555x343 && $image_350x217) {
-
-                $insert = $this->brand_model->add(
-                    array(
-                    "title"         => $this->input->post("title"),
-                    "img_url"       => $file_name,
-                    "rank"          => 0,
-                    "isActive"      => 1,
-                    "createdAt"     => date("Y-m-d H:i:s")
+            $insert = $this->user_role_model->add(
+                array(
+                "title"         => $this->input->post("title"),
+                "img_url"       => $file_name,
+                "rank"          => 0,
+                "isActive"      => 1,
+                "createdAt"     => date("Y-m-d H:i:s")
                 )
             );
 
-                //TODO: alert sistemi eklenecek.
-                if ($insert) {
+            //TODO: alert sistemi eklenecek.
+            if ($insert) {
 
-                    $alert = array(
-                        "title"      =>"İşlem Başarılı",
-                        "message"    =>"Kayıt ekleme işlemi başarılı.",
-                        "type"      =>"success"
-                    );
-
-                }else {
-
-                    $alert = array(
-                        "title"      =>"İşlem Başarısız.",
-                        "message"    =>"Kayıt eklenemedi",
-                        "type"      =>"error"
-                    );
-                            
-                }
-
-                
-
-            } else {
                 $alert = array(
-                    "title"      =>"İşlem Başarısız.",
-                    "message"    =>"Görsel yüklenirken bir problem oluştu.",
-                    "type"      =>"error"
+                    "title"      =>"İşlem Başarılı",
+                    "message"    =>"Kayıt ekleme işlemi başarılı.",
+                    "type"      =>"success"
                 );
 
-                $this->session->set_flashdata("alert", $alert);
+            }else {
 
-                redirect(base_url("brands/new_form"));
+                $alert = array(
+                    "title"      =>"İşlem Başarısız.",
+                    "message"    =>"Kayıt eklenemedi",
+                    "type"      =>"error"
+                );
+                        
             }
-          
-            
-            
             
             // işlem sonucunu sessiona yazıyoruz.
             $this->session->set_flashdata("alert", $alert);
 
-            redirect(base_url("brands"));
+            redirect(base_url("user_roles"));
 
         }else {
             $viewData = new stdClass();
@@ -157,14 +109,10 @@ class Brands extends CMS_Controller
 
     public function update_form($id){
 
-        if (!isAllowedUpdateModule()) {
-            redirect(base_url("brands"));
-        }
-
         $viewData = new stdClass();
 
         // Tablodan ilgili veri getiriliyor.
-        $item = $this->brand_model->get(
+        $item = $this->user_role_model->get(
             array(
                 "id"        => $id
             )
@@ -197,42 +145,11 @@ class Brands extends CMS_Controller
         $validate = $this->form_validation->run();
 
         if ($validate) {
-
-            if ($_FILES["img_url"]["name"] != "") {
-
-                $file_name = convertToSeo(pathinfo($_FILES["img_url"]["name"], PATHINFO_FILENAME)) . "." . pathinfo($_FILES["img_url"]["name"], PATHINFO_EXTENSION);
-
-                $image_555x343 = upload_picture($_FILES["img_url"]["tmp_name"], "uploads/$this->viewFolder", 555, 343, $file_name );
-                $image_350x217 = upload_picture($_FILES["img_url"]["tmp_name"], "uploads/$this->viewFolder", 350, 217, $file_name );
-    
-                if ($image_555x343 && $image_350x217) {
-
-                    $data =  array(
-                        "title"     => $this->input->post("title"),
-                        "img_url"   => $file_name,
-                    );
-
-                } else {
-                    $alert = array(
-                        "title"      =>"İşlem Başarısız.",
-                        "message"    =>"Görsel yüklenirken bir problem oluştu.",
-                        "type"      =>"error"
-                    );
-
-                    $this->session->set_flashdata("alert", $alert);
-
-                    redirect(base_url("brands/update_form/$id"));
-                }
-
-            } else {
-                $data =  array(
-                    "title"         => $this->input->post("title"),
-                );
-            }
-
-         
             
-            $update = $this->brand_model->update(array("id" => $id), $data);
+            $update = $this->user_role_model->update(array("id" => $id), array(
+                "title" => $this->input->post("title")
+                )
+            );
 
             //TODO: alert sistemi eklenecek.
             if ($update) {
@@ -255,7 +172,7 @@ class Brands extends CMS_Controller
             // işlem sonucunu sessiona yazıyoruz.
             $this->session->set_flashdata("alert", $alert);
 
-            redirect(base_url("brands"));
+            redirect(base_url("user_roles"));
 
         }else {
             $viewData = new stdClass();
@@ -265,7 +182,7 @@ class Brands extends CMS_Controller
             $viewData->form_error = true;
 
             // Tablodan ilgili veri getiriliyor.
-            $viewData->item = $this->brand_model->get(
+            $viewData->item = $this->user_role_model->get(
                 array(
                     "id"        => $id
                 )
@@ -277,12 +194,7 @@ class Brands extends CMS_Controller
     }
 
     public function delete($id){
-
-        if (!isAllowedDeleteModule()) {
-            redirect(base_url("brands"));
-        }
-
-        $delete = $this->brand_model->delete(
+        $delete = $this->user_role_model->delete(
             array(
                 "id" => $id
             )
@@ -304,7 +216,7 @@ class Brands extends CMS_Controller
         }
 
         $this->session->set_flashdata("alert", $alert);
-        redirect(base_url("brands"));
+        redirect(base_url("user_roles"));
 
     }
 
@@ -314,7 +226,7 @@ class Brands extends CMS_Controller
 
             $isActive = ($this->input->post("data") === "true") ? 1 : 0 ;
 
-            $this->brand_model->update(
+            $this->user_role_model->update(
                 array(
                     "id" => $id
                 ),
@@ -327,27 +239,61 @@ class Brands extends CMS_Controller
         }
     }
 
-    public function rankSetter(){
-        $data = $this->input->post("data");
+    public function permissions_form($id){
 
-        parse_str($data, $order);
+        $viewData = new stdClass();
 
-        $items = $order["ord"];
+        // Tablodan ilgili veri getiriliyor.
+        $item = $this->user_role_model->get(
+            array(
+                "id"        => $id
+            )
+        );
 
-        foreach ($items as $rank => $id) {
 
-            $this->brand_model->update(
-                array(
-                    "id"        => $id,
-                    "rank !="   => $rank
-                ),
-                array(
-                    "rank" => $rank
-                )
-            );
+        $viewData->viewFolder = $this->viewFolder;
+        $viewData->subViewFolder = "permissions";
+        $viewData->item = $item;
 
-        }
+        $this->load->view("{$viewData->viewFolder}/{$viewData->subViewFolder}/index", $viewData);
     }
 
+    public function update_permissions($id){
+
+        $permissions = json_encode($this->input->post("permissions"));
+
+        // Update işlemi
+        $update = $this->user_role_model->update(
+            array("id" => $id), 
+            array(
+                "permissions"     => $permissions
+            )
+        );
+
+        //TODO: alert sistemi eklenecek.
+        if ($update) {
+
+            $alert = array(
+                "title"      =>"İşlem Başarılı",
+                "message"    =>"Yetki güncelleme işlemi başarılı.",
+                "type"      =>"success"
+            );
+
+        }else {
+
+            $alert = array(
+                "title"      =>"İşlem Başarısız.",
+                "message"    =>"Yetki güncelleme sırasında bir problem oluştu.",
+                "type"      =>"error"
+            );
+        }
+        
+        // işlem sonucunu sessiona yazıyoruz.
+        $this->session->set_flashdata("alert", $alert);
+
+        redirect(base_url("user_roles/permissions_form/$id"));
+
+        die();
+    }
 
 }

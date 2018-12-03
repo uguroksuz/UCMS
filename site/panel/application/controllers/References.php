@@ -1,6 +1,6 @@
 <?php
 
-class References extends CI_Controller 
+class References extends CMS_Controller 
 {
 
     public $viewFolder = "";

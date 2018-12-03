@@ -1,6 +1,6 @@
 <?php
 
-class Testimonials extends CI_Controller 
+class Testimonials extends CMS_Controller 
 {
 
     public $viewFolder = "";

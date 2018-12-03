@@ -1,6 +1,6 @@
 <?php
 
-class Galleries extends CI_Controller 
+class Galleries extends CMS_Controller 
 {
 
     public $viewFolder = "";

@@ -25,6 +25,58 @@ function get_active_user(){
     }
 }
 
+function isAdmin(){
+    $t = &get_instance();
+    $user = $t->session->userdata("user");
+    return true;
+    if ($user->user_role == "admin") {
+        return true;
+    }else{
+        return false;
+    }
+}
+
+function get_user_roles(){
+    $t = &get_instance();
+    setUserRoles();
+    return $t->session->userdata("user_roles");
+}
+
+function setUserRoles(){
+    $t = &get_instance();
+    $t->load->model('user_role_model');
+    $user_roles = $t->user_role_model->get_all(
+        array(
+            "isActive" => 1
+        )
+    );
+
+    $roles = [];
+    foreach ($user_roles as $role) {
+        $roles[$role->id] = $role->permissions;
+    }
+    $t->session->set_userdata("user_roles", $roles);
+}
+
+function getControllerList(){
+
+    $t = &get_instance();
+
+    $controllers = array();
+    $t->load->helper("file");
+
+    $files = get_dir_file_info(APPPATH."controllers", FALSE);
+
+    foreach (array_keys($files) as $file) {
+        if($file != "index.html"){
+            $controllers[] = strtolower(str_replace(".php", "", $file));
+        }
+    }
+
+    return $controllers;
+
+}
+
 function send_email($toEmail = "", $subject = "", $message = ""){
 
 

@@ -1,6 +1,6 @@
 <?php
 
-class courses extends CI_Controller 
+class courses extends CMS_Controller 
 {
 
     public $viewFolder = "";

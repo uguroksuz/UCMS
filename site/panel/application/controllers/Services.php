@@ -1,6 +1,6 @@
 <?php
 
-class Services extends CI_Controller 
+class Services extends CMS_Controller 
 {
 
     public $viewFolder = "";

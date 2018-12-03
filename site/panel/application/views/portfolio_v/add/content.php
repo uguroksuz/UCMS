@@ -11,27 +11,27 @@
             <div class="widget-body">
                 <form action="<?php echo base_url("portfolio/save"); ?>" method="post">
                     <div class="row">
-                    <div class="form-group col-md-6">
-                        <label>Başlık</label>
-                        <input class="form-control" id="exampleInputEmail1" placeholder="Başlık" name="title">
-                        <?php if (isset($form_error)) { ?>
-                            <small class="input-form-error"><?php echo form_error("title"); ?></small>
-                        <?php }?>
-                    </div>
-                    
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label>Kategori</label>
-                            <select name="category_id" class="form-control">
-                                <?php foreach ($categories as $category ) { ?>
-                                    <option value="<?php echo $category->id ?>"><?php echo $category->title; ?></option>
-                                <?php } ?>
-                            </select>
+                        <div class="form-group col-md-6">
+                            <label>Başlık</label>
+                            <input class="form-control" id="exampleInputEmail1" placeholder="Başlık" name="title">
                             <?php if (isset($form_error)) { ?>
-                                <small class="input-form-error"><?php echo form_error("client"); ?></small>
+                                <small class="input-form-error"><?php echo form_error("title"); ?></small>
                             <?php }?>
                         </div>
-                    </div>
+                        
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Kategori</label>
+                                <select name="category_id" class="form-control">
+                                    <?php foreach ($categories as $category ) { ?>
+                                        <option value="<?php echo $category->id ?>"><?php echo $category->title; ?></option>
+                                    <?php } ?>
+                                </select>
+                                <?php if (isset($form_error)) { ?>
+                                    <small class="input-form-error"><?php echo form_error("client"); ?></small>
+                                <?php }?>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="row">

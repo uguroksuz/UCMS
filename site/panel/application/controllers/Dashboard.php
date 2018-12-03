@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Dashboard extends CI_Controller {
+class Dashboard extends CMS_Controller {
 
 	public $viewFolder = "";
 
@@ -20,6 +20,7 @@ class Dashboard extends CI_Controller {
 	
 	public function index()
 	{
+				
 		$viewData = new stdClass();
 		$viewData->viewFolder = $this->viewFolder;
 		$viewData->subViewFolder = "list";

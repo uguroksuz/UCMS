@@ -1,6 +1,6 @@
 <?php
 
-class Popups extends CI_Controller 
+class Popups extends CMS_Controller 
 {
 
     public $viewFolder = "";

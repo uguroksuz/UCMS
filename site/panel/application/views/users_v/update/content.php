@@ -33,7 +33,17 @@
                         <?php }?>
                     </div>
 
-  
+                    <div class="form-group">
+                        <label>Kullanıcı Rolü</label>
+                        <select name="user_role_id" class="form-control">
+                            <?php foreach ($user_roles as $user_role ) { ?>
+                                <option <?php echo ($user_role->id == $item->user_role_id)? "selected" : ""; ?> value="<?php echo $user_role->id ?>"><?php echo $user_role->title; ?></option>
+                            <?php } ?>
+                        </select>
+                        <?php if (isset($form_error)) { ?>
+                            <small class="input-form-error"><?php echo form_error("client"); ?></small>
+                        <?php }?>
+                    </div>  
 
                     <button type="submit" class="btn btn-outline btn-primary btn-md">Güncelle</button>
                     <a href="<?php echo base_url("users"); ?>" class="btn btn-outline btn-danger btn-md">İptal</a>

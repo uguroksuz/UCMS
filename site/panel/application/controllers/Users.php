@@ -1,6 +1,6 @@
 <?php
 
-class Users extends CI_Controller 
+class Users extends CMS_Controller 
 {
 
     public $viewFolder = "";
@@ -16,16 +16,28 @@ class Users extends CI_Controller
         $this->viewFolder = "users_v";
 
         $this->load->model("user_model");
+        $this->load->model('user_role_model');
+
     }
 
     public function index(){
 
         $viewData = new stdClass();
+
+        $user = get_active_user();
+
+        if (isAdmin()) {
+            $where = array();            
+        } else {
+            $where = array(
+                "id" => $user->id
+            );
+        }
         
 
         // Tablodan verilerin getirilmesi..
         $items = $this->user_model->get_all(
-            array()
+            $where
         );
 
         // View e gönderilecek değişkenlerin set edilmesi
@@ -39,6 +51,12 @@ class Users extends CI_Controller
     public function new_form(){
 
         $viewData = new stdClass();
+
+        $viewData->user_roles = $this->user_role_model->get_all(
+            array(
+                "isActive" => 1
+            )
+        );
 
         $viewData->viewFolder = $this->viewFolder;
         $viewData->subViewFolder = "add";
@@ -57,7 +75,8 @@ class Users extends CI_Controller
         $this->form_validation->set_rules("email", "E-posta", "required|trim|valid_email|is_unique[users.email]");
         $this->form_validation->set_rules("password", "Şifre", "required|trim|min_length[6]|max_length[8]");
         $this->form_validation->set_rules("re_password", "Şifre Tekrar", "required|trim|min_length[6]|max_length[8]|matches[password]");
-        
+        $this->form_validation->set_rules("user_role_id", "Kullanıcı Rolü", "required|trim");
+
         $this->form_validation->set_message(
             array(
                 "required"      => "{field} alanı doldurulmalıdır.",
@@ -80,6 +99,7 @@ class Users extends CI_Controller
                     "full_name"     => $this->input->post("full_name"),
                     "email"         => $this->input->post("email"),
                     "password"      => md5($this->input->post("password")),
+                    "user_role_id"      => $this->input->post("user_role_id"),
                     "isActive"      => 1,
                     "createdAt"     => date("Y-m-d H:i:s")
                 )
@@ -129,6 +149,11 @@ class Users extends CI_Controller
             )
         );
 
+        $viewData->user_roles = $this->user_role_model->get_all(
+            array(
+                "isActive" => 1
+            )
+        );
 
         $viewData->viewFolder = $this->viewFolder;
         $viewData->subViewFolder = "update";
@@ -156,91 +181,6 @@ class Users extends CI_Controller
         $this->load->view("{$viewData->viewFolder}/{$viewData->subViewFolder}/index", $viewData);
     }
 
-    public function update($id){
-        
-        $this->load->library("form_validation");
-
-        $oldUser = $this->user_model->get(
-            array(
-                "id" => $id
-            )
-        );
-
-        if ($oldUser->user_name != $this->input->post("user_name")) {            
-            $this->form_validation->set_rules("user_name", "Kullanıcı Adı", "required|trim|is_unique[users.user_name]");
-        }
-
-        if ($oldUser->email != $this->input->post("email")) {            
-            $this->form_validation->set_rules("email", "E-posta", "required|trim|valid_email|is_unique[users.email]");
-        }
-
-        $this->form_validation->set_rules("full_name", "Ad Soyad", "required|trim");
-        
-        $this->form_validation->set_message(
-            array(
-                "required"      => "{field} alanı doldurulmalıdır.",
-                "valid_email"   => "Lütfen geçerli bir e-posta adresi giriniz.",
-                "is_unique"     => "Bu {field} daha önce kullanılmış.",
-            )
-        );
-
-        //form validation çalıştırılır.
-        $validate = $this->form_validation->run();
-
-        if ($validate) {
-
-            // Update işlemi
-            $update = $this->user_model->update(
-                array("id" => $id), 
-                array(
-                    "user_name"     => $this->input->post("user_name"),
-                    "full_name"     => $this->input->post("full_name"),
-                    "email"         => $this->input->post("email"),
-                )
-            );
-
-            //TODO: alert sistemi eklenecek.
-            if ($update) {
-
-                $alert = array(
-                    "title"      =>"İşlem Başarılı",
-                    "message"    =>"Güncelleme işlemi başarılı.",
-                    "type"      =>"success"
-                );
-
-            }else {
-
-                $alert = array(
-                    "title"      =>"İşlem Başarısız.",
-                    "message"    =>"Kayıt güncelleme sırasında bir problem oluştu.",
-                    "type"      =>"error"
-                );
-            }
-            
-            // işlem sonucunu sessiona yazıyoruz.
-            $this->session->set_flashdata("alert", $alert);
-
-            redirect(base_url("users"));
-
-        }else {
-            $viewData = new stdClass();
-
-            $viewData->viewFolder = $this->viewFolder;
-            $viewData->subViewFolder = "update";
-            $viewData->form_error = true;
-
-            // Tablodan ilgili veri getiriliyor.
-            $viewData->item = $this->user_model->get(
-                array(
-                    "id"        => $id
-                )
-            );
-
-            $this->load->view("{$viewData->viewFolder}/{$viewData->subViewFolder}/index", $viewData);
-        }
-
-    }
-    
     public function update_password($id){
         
         $this->load->library("form_validation");
@@ -309,6 +249,95 @@ class Users extends CI_Controller
         }
 
     }
+
+    public function update($id){
+        
+        $this->load->library("form_validation");
+
+        $oldUser = $this->user_model->get(
+            array(
+                "id" => $id
+            )
+        );
+
+        if ($oldUser->user_name != $this->input->post("user_name")) {            
+            $this->form_validation->set_rules("user_name", "Kullanıcı Adı", "required|trim|is_unique[users.user_name]");
+        }
+
+        if ($oldUser->email != $this->input->post("email")) {            
+            $this->form_validation->set_rules("email", "E-posta", "required|trim|valid_email|is_unique[users.email]");
+        }
+
+        $this->form_validation->set_rules("full_name", "Ad Soyad", "required|trim");
+        $this->form_validation->set_rules("user_role_id", "Kullanıcı Rolü", "required|trim");
+        
+        $this->form_validation->set_message(
+            array(
+                "required"      => "{field} alanı doldurulmalıdır.",
+                "valid_email"   => "Lütfen geçerli bir e-posta adresi giriniz.",
+                "is_unique"     => "Bu {field} daha önce kullanılmış.",
+            )
+        );
+
+        //form validation çalıştırılır.
+        $validate = $this->form_validation->run();
+
+        if ($validate) {
+
+            // Update işlemi
+            $update = $this->user_model->update(
+                array("id" => $id), 
+                array(
+                    "user_name"     => $this->input->post("user_name"),
+                    "full_name"     => $this->input->post("full_name"),
+                    "email"         => $this->input->post("email"),
+                    "user_role_id"      => $this->input->post("user_role_id"),
+                )
+            );
+
+            //TODO: alert sistemi eklenecek.
+            if ($update) {
+
+                $alert = array(
+                    "title"      =>"İşlem Başarılı",
+                    "message"    =>"Güncelleme işlemi başarılı.",
+                    "type"      =>"success"
+                );
+
+            }else {
+
+                $alert = array(
+                    "title"      =>"İşlem Başarısız.",
+                    "message"    =>"Kayıt güncelleme sırasında bir problem oluştu.",
+                    "type"      =>"error"
+                );
+            }
+            
+            // işlem sonucunu sessiona yazıyoruz.
+            $this->session->set_flashdata("alert", $alert);
+
+            redirect(base_url("users"));
+
+        }else {
+            $viewData = new stdClass();
+
+            $viewData->viewFolder = $this->viewFolder;
+            $viewData->subViewFolder = "update";
+            $viewData->form_error = true;
+
+            // Tablodan ilgili veri getiriliyor.
+            $viewData->item = $this->user_model->get(
+                array(
+                    "id"        => $id
+                )
+            );
+
+            $this->load->view("{$viewData->viewFolder}/{$viewData->subViewFolder}/index", $viewData);
+        }
+
+    }
+    
+    
 
     public function delete($id){
         $delete = $this->user_model->delete(

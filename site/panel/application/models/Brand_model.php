@@ -1,39 +1,12 @@
 <?php
 
-class Brand_model extends CI_Model {
-
-    public $tableName = "brands";
+class Brand_model extends CMS_Model {
 
     public function __construct()
     {
         parent::__construct();
-    }
-
-     public function get($where = array()){
-
-        return $this->db->where($where)->get($this->tableName)->row();
-    }
-
-    //Tüm kayıtları getirecek metot...
-    public function get_all($where = array(), $order = "id ASC"){
-
-        return $this->db->where($where)->order_by($order)->get($this->tableName)->result();
-    }
-
-    public function add($data = array()){
-
-        return $this->db->insert($this->tableName, $data);
+        $this->tableName = "brands";
 
     }
-
-    public function update($where = array(), $data = array()){
-        
-        return $this->db->where($where)->update($this->tableName, $data);
-    }
-
-    public function delete($where = array())
-    {
-        return $this->db->where($where)->delete($this->tableName);
-    }
-
+    
 }

@@ -1,6 +1,6 @@
 <?php
 
-class Slides extends CI_Controller 
+class Slides extends CMS_Controller 
 {
 
     public $viewFolder = "";
