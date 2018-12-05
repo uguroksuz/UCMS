@@ -1,5 +1,12 @@
 $(document).ready(function(){
 
+    $(".selectAll").on("click", function(){
+        $(":checkbox").prop('checked', false).trigger("click");
+    })
+    $(".deselectAll").on("click", function(){
+        $(":checkbox").prop('checked', true).trigger("click");
+    })
+
     $(".sortable").sortable();
 
     $(".content-container, .image_list_container").on("click" , ".remove-btn" , function(){

@@ -10,12 +10,6 @@ class Dashboard extends CMS_Controller {
 
 		$this->viewFolder = "dashboard_v";
 
-		//$this->user = get_active_user();
-
-		if(!get_active_user()){
-			redirect(base_url("login"));
-		}
-
 	}
 	
 	public function index(){

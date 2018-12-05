@@ -27,6 +27,7 @@
                                 <td class="text-center w-150">
                                     <input  name="permissions[<?php echo $controllerName;?>][read]"
                                             type="checkbox"
+                                            class="special"
                                             <?php echo (isset($permissions->$controllerName) && isset($permissions->$controllerName->read)) ? "checked" : ""; ?> 
                                             data-switchery/>
                                 </td>
@@ -53,8 +54,10 @@
                        </tbody>
                    </table>
                     <hr>
+                    <span href="#" class="btn btn-outline btn-default btn-md selectAll pull-right">Tümünü Seç</span>
+                    <span href="#" class="btn btn-outline btn-default btn-md deselectAll pull-right">Tümünü Kaldır</span>
                     <button type="submit" class="btn btn-outline btn-primary btn-md">Güncelle</button>
-                    <a href="<?php echo base_url("users"); ?>" class="btn btn-outline btn-danger btn-md">İptal</a>
+                    <a href="<?php echo base_url("user_roles"); ?>" class="btn btn-outline btn-danger btn-md">İptal</a>
                 </form>
             </div><!-- .widget-body -->
         </div><!-- .widget -->
